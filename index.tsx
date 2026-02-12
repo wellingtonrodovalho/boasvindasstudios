@@ -369,7 +369,8 @@ const App = () => {
                       <p className="text-xl font-mono tracking-tighter">
                         <span className="text-amber-500">*</span> ddd + prefixo <span className="text-amber-500">#</span>
                       </p>
-                      <p className="text-[10px] text-gray-400">Ex: Celular 62 98545-1980 -> <strong>*6298545#</strong></p>
+                      {/* Corrigido caractere '>' escapando com HTML entity */}
+                      <p className="text-[10px] text-gray-400">Ex: Celular 62 98545-1980 &rarr; <strong>*6298545#</strong></p>
                     </div>
                   </div>
                 </div>
@@ -392,7 +393,6 @@ const App = () => {
             <div className="p-6 space-y-10 pb-24">
               
               <div className="flex flex-col lg:flex-row gap-8 items-start">
-                {/* Placa de Wi-Fi Estilizada */}
                 <div className="flex flex-col items-center gap-6 py-4 w-full lg:w-1/3">
                   <div className="text-center space-y-1">
                     <h2 className="text-3xl font-bold tracking-tighter italic text-gray-800">{STUDIO_INFO.name}</h2>
@@ -536,7 +536,6 @@ const App = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                {/* Horário */}
                 <div className="bg-white p-6 rounded-3xl border border-amber-100 shadow-sm flex items-start gap-4">
                   <div className="bg-amber-500 p-3 rounded-2xl text-white shadow-md flex-shrink-0">
                     <Clock className="w-6 h-6" />
@@ -548,8 +547,6 @@ const App = () => {
                     </p>
                   </div>
                 </div>
-
-                {/* Toalhas */}
                 <div className="bg-white p-6 rounded-3xl border border-amber-100 shadow-sm flex items-start gap-4">
                   <div className="bg-sky-500 p-3 rounded-2xl text-white shadow-md flex-shrink-0">
                     <Bath className="w-6 h-6" />
@@ -561,8 +558,6 @@ const App = () => {
                     </p>
                   </div>
                 </div>
-
-                {/* Lixo */}
                 <div className="bg-white p-6 rounded-3xl border border-amber-100 shadow-sm flex items-start gap-4">
                   <div className="bg-emerald-500 p-3 rounded-2xl text-white shadow-md flex-shrink-0">
                     <Trash2 className="w-6 h-6" />
@@ -574,8 +569,6 @@ const App = () => {
                     </p>
                   </div>
                 </div>
-
-                {/* Equipamentos */}
                 <div className="bg-white p-6 rounded-3xl border border-amber-100 shadow-sm flex items-start gap-4">
                   <div className="bg-orange-500 p-3 rounded-2xl text-white shadow-md flex-shrink-0">
                     <Zap className="w-6 h-6" />
@@ -587,8 +580,6 @@ const App = () => {
                     </p>
                   </div>
                 </div>
-
-                {/* Portas e Janelas */}
                 <div className="bg-white p-6 rounded-3xl border border-amber-100 shadow-sm flex items-start gap-4">
                   <div className="bg-indigo-500 p-3 rounded-2xl text-white shadow-md flex-shrink-0">
                     <DoorClosed className="w-6 h-6" />
@@ -600,8 +591,6 @@ const App = () => {
                     </p>
                   </div>
                 </div>
-
-                {/* Objetos Pessoais */}
                 <div className="bg-white p-6 rounded-3xl border border-amber-100 shadow-sm flex items-start gap-4">
                   <div className="bg-rose-500 p-3 rounded-2xl text-white shadow-md flex-shrink-0">
                     <Search className="w-6 h-6" />
@@ -615,7 +604,6 @@ const App = () => {
                 </div>
               </div>
 
-              {/* Destaque Devolução TAG */}
               <div className="bg-gray-900 text-white p-8 rounded-[2rem] shadow-2xl relative overflow-hidden group">
                 <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:scale-110 transition-transform">
                   <Key className="w-32 h-32" />
@@ -688,7 +676,6 @@ const App = () => {
     <div className="min-h-screen bg-[#fdfaf5] flex flex-col relative antialiased selection:bg-amber-100 selection:text-amber-900">
       <main className="flex-grow w-full">{renderContent()}</main>
       
-      {/* Botões Flutuantes Responsivos */}
       <div className="fixed bottom-6 inset-x-0 px-6 flex justify-between items-end max-w-5xl mx-auto z-50 pointer-events-none">
         <div className="pointer-events-auto">
           <AnimatePresence>
@@ -716,7 +703,6 @@ const App = () => {
         </div>
       </div>
 
-      {/* Chat responsivo */}
       <AnimatePresence>
         {isChatOpen && (
           <motion.div initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }} className="fixed inset-0 z-[60] bg-white flex flex-col sm:inset-auto sm:right-6 sm:bottom-6 sm:w-96 sm:h-[600px] sm:rounded-3xl shadow-2xl overflow-hidden border border-amber-50">
