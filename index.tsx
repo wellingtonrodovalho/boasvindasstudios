@@ -112,6 +112,16 @@ const LOCAL_PLACES = [
 ];
 
 // --- Components ---
+const Logo = ({ className = "w-8 h-8" }: { className?: string }) => (
+  <svg viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+    <path d="M256 460V180" stroke="#5c4017" strokeWidth="44" strokeLinecap="round"/>
+    <path d="M256 380L120 280" stroke="#5c4017" strokeWidth="44" strokeLinecap="round"/>
+    <path d="M256 380L392 280" stroke="#5c4017" strokeWidth="44" strokeLinecap="round"/>
+    <circle cx="256" cy="150" r="110" fill="#f1b51c"/>
+    <circle cx="90" cy="300" r="95" fill="#f1b51c"/>
+    <circle cx="422" cy="300" r="95" fill="#f1b51c"/>
+  </svg>
+);
 
 const Header = ({ title, onBack }: { title: string, onBack?: () => void }) => (
   <header className="sticky top-0 z-40 w-full bg-white/90 backdrop-blur-md py-4 px-6 border-b border-amber-100 shadow-sm">
@@ -125,7 +135,7 @@ const Header = ({ title, onBack }: { title: string, onBack?: () => void }) => (
         <h1 className="text-xl font-bold text-gray-800 tracking-tight">{title}</h1>
       </div>
       <div className="flex items-center gap-2">
-        <img src="/logo.png" alt="Logo" className="w-8 h-8 object-contain" />
+        <Logo className="w-8 h-8" />
       </div>
     </div>
   </header>
@@ -188,9 +198,9 @@ const App = () => {
               <motion.div 
                 initial={{ scale: 0.5, opacity: 0 }} 
                 animate={{ scale: 1, opacity: 1 }}
-                className="w-32 h-32 md:w-40 md:h-40 bg-white rounded-[2.5rem] md:rounded-[3rem] flex items-center justify-center shadow-2xl rotate-3 border-4 border-amber-500 overflow-hidden p-4"
+                className="w-32 h-32 md:w-40 md:h-40 bg-white rounded-[2.5rem] md:rounded-[3rem] flex items-center justify-center shadow-2xl rotate-3 border-4 border-amber-500 overflow-hidden p-6"
               >
-                <img src="/logo.png" alt="Studios Ipê Logo" className="w-full h-full object-contain" />
+                <Logo className="w-full h-full" />
               </motion.div>
               <div className="space-y-2">
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 tracking-tighter italic">{STUDIO_INFO.name}</h1>
@@ -651,7 +661,7 @@ const App = () => {
 
       <footer className="py-12 text-center">
         <div className="max-w-4xl mx-auto px-6 flex flex-col items-center gap-4">
-          <img src="/logo.png" alt="Logo" className="w-6 h-6 opacity-40 grayscale hover:grayscale-0 transition-all" />
+          <Logo className="w-6 h-6 opacity-40 grayscale hover:grayscale-0 transition-all" />
           <p className="text-[10px] md:text-xs text-gray-400 font-black uppercase tracking-[0.4em]">{STUDIO_INFO.name} • Setor Bueno • Welcome Home</p>
           <div className="h-px w-20 bg-amber-100"></div>
         </div>
