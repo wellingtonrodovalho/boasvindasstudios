@@ -663,7 +663,18 @@ const App = () => {
         <div className="max-w-4xl mx-auto px-6 flex flex-col items-center gap-4">
           <Logo className="w-6 h-6 opacity-40 grayscale hover:grayscale-0 transition-all" />
           <p className="text-[10px] md:text-xs text-gray-400 font-black uppercase tracking-[0.4em]">{STUDIO_INFO.name} • Setor Bueno • Welcome Home</p>
-          <div className="h-px w-20 bg-amber-100"></div>
+          
+          <div className="space-y-1 text-[9px] md:text-[10px] text-gray-400 font-medium uppercase tracking-wider max-w-lg">
+            <p>Corretor de Imóveis: <span className="text-gray-500 font-bold">WELLINGTON RODOVALHO FONSECA</span></p>
+            <p>CAEPF: 269.462.701/001-49 • CRECI: CRECI-GO 42695 • CNAI: 54826</p>
+            <div className="flex flex-wrap justify-center gap-x-3 gap-y-1 mt-2">
+              <a href="https://www.alugagoias.com.br" target="_blank" rel="noopener noreferrer" className="hover:text-amber-600 transition-colors">www.alugagoias.com.br</a>
+              <a href="https://wa.me/5562985451980" target="_blank" rel="noopener noreferrer" className="hover:text-amber-600 transition-colors">WhatsApp: 62 98545-1980</a>
+              <a href="mailto:contato@alugagoias.com.br" className="hover:text-amber-600 transition-colors">contato@alugagoias.com.br</a>
+            </div>
+          </div>
+
+          <div className="h-px w-20 bg-amber-100 mt-2"></div>
         </div>
       </footer>
     </div>
