@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { createRoot } from 'react-dom/client';
 import { 
   Home, 
@@ -52,7 +52,6 @@ import {
   DoorClosed
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { GoogleGenAI } from '@google/genai';
 
 // --- Types & Constants ---
 type Section = 'home' | 'studio' | 'checkin' | 'casa' | 'local' | 'checkout' | 'emergencia';
@@ -67,6 +66,7 @@ const STUDIO_INFO = {
   checkinTime: "14:00",
   checkoutTime: "11:00",
   keySafeCode: "0906",
+  hostWhatsapp: "5562985451980",
   emergencyContacts: [
     { name: "Suporte Anfitrião (Wellington)", number: "62 98545-1980", type: 'whatsapp' },
     { name: "Polícia Militar do Estado de Goiás", number: "190", type: 'phone' },
@@ -111,11 +111,6 @@ const LOCAL_PLACES = [
   { category: 'gastronomia', title: 'Smart Fit', desc: 'Academia completa para o seu treino.', icon: Dumbbell, href: "https://maps.app.goo.gl/2wPMes7xJxm5jXJG6" },
 ];
 
-const SYSTEM_INSTRUCTION = `Você é o Assistente Virtual do Studio Ipê (também conhecido como Studio 45) em Goiânia, localizado no Setor Bueno. 
-Temos as unidades 101A e 101B. Personalidade acolhedora e prestativa. Responda sempre em PT-BR.
-Destaques: Check-in via cofre no poste amarelo (senha 0906), portão vermelho, andar 1, fechadura digital (* + ddd sem zero + prefixo + #). 
-O anfitrião é Wellington Rodovalho (WhatsApp: 62 985451980).`;
-
 // --- Components ---
 
 const Header = ({ title, onBack }: { title: string, onBack?: () => void }) => (
@@ -129,8 +124,8 @@ const Header = ({ title, onBack }: { title: string, onBack?: () => void }) => (
         )}
         <h1 className="text-xl font-bold text-gray-800 tracking-tight">{title}</h1>
       </div>
-      <div className="bg-amber-500 p-2 rounded-xl shadow-sm">
-        <Building2 className="w-5 h-5 text-white" />
+      <div className="flex items-center gap-2">
+        <img src="/logo.png" alt="Logo" className="w-8 h-8 object-contain" />
       </div>
     </div>
   </header>
@@ -178,57 +173,11 @@ const LocalSectionItem: React.FC<{ title: string, desc?: string, icon: any, href
 const App = () => {
   const [activeSection, setActiveSection] = useState<Section>('home');
   const [activeCategory, setActiveCategory] = useState<Category>('todos');
-  const [isChatOpen, setIsChatOpen] = useState(false);
-  const [messages, setMessages] = useState<{role: 'user' | 'model', text: string}[]>([
-    { role: 'model', text: `Olá! Sou o concierge do ${STUDIO_INFO.name}. Como posso ajudar você hoje?` }
-  ]);
-  const [inputValue, setInputValue] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
-  const chatEndRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (chatEndRef.current) {
-      chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [messages]);
 
   const filteredPlaces = useMemo(() => {
     if (activeCategory === 'todos') return LOCAL_PLACES;
     return LOCAL_PLACES.filter(place => place.category === activeCategory);
   }, [activeCategory]);
-
-  const handleSendMessage = async () => {
-    if (!inputValue.trim() || isTyping) return;
-    const userMsg = inputValue.trim();
-    setMessages(prev => [...prev, { role: 'user', text: userMsg }]);
-    setInputValue('');
-    setIsTyping(true);
-
-    try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-      const history = messages.filter((_, idx) => idx > 0).map(m => ({
-        role: m.role,
-        parts: [{ text: m.text }]
-      }));
-
-      const response = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
-        contents: [...history, { role: 'user', parts: [{ text: userMsg }] }],
-        config: {
-          systemInstruction: SYSTEM_INSTRUCTION,
-          maxOutputTokens: 800,
-          thinkingConfig: { thinkingBudget: 100 }
-        }
-      });
-
-      const aiResponse = response.text || "Desculpe, não consegui processar agora.";
-      setMessages(prev => [...prev, { role: 'model', text: aiResponse }]);
-    } catch (error) {
-      setMessages(prev => [...prev, { role: 'model', text: "Erro de conexão. Tente novamente." }]);
-    } finally {
-      setIsTyping(false);
-    }
-  };
 
   const renderContent = () => {
     switch (activeSection) {
@@ -239,9 +188,9 @@ const App = () => {
               <motion.div 
                 initial={{ scale: 0.5, opacity: 0 }} 
                 animate={{ scale: 1, opacity: 1 }}
-                className="w-32 h-32 md:w-40 md:h-40 bg-amber-500 rounded-[2.5rem] md:rounded-[3rem] flex items-center justify-center shadow-2xl rotate-3"
+                className="w-32 h-32 md:w-40 md:h-40 bg-white rounded-[2.5rem] md:rounded-[3rem] flex items-center justify-center shadow-2xl rotate-3 border-4 border-amber-500 overflow-hidden p-4"
               >
-                <Home className="w-16 h-16 md:w-20 md:h-20 text-white" />
+                <img src="/logo.png" alt="Studios Ipê Logo" className="w-full h-full object-contain" />
               </motion.div>
               <div className="space-y-2">
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 tracking-tighter italic">{STUDIO_INFO.name}</h1>
@@ -369,7 +318,6 @@ const App = () => {
                       <p className="text-xl font-mono tracking-tighter">
                         <span className="text-amber-500">*</span> ddd + prefixo <span className="text-amber-500">#</span>
                       </p>
-                      {/* Corrigido caractere '>' escapando com HTML entity */}
                       <p className="text-[10px] text-gray-400">Ex: Celular 62 98545-1980 &rarr; <strong>*6298545#</strong></p>
                     </div>
                   </div>
@@ -687,58 +635,25 @@ const App = () => {
           </AnimatePresence>
         </div>
         <div className="pointer-events-auto">
-          <AnimatePresence>
-            {!isChatOpen && (
-              <motion.button 
-                initial={{ scale: 0 }} 
-                animate={{ scale: 1 }} 
-                exit={{ scale: 0 }} 
-                onClick={() => setIsChatOpen(true)} 
-                className="w-16 h-16 md:w-20 md:h-20 bg-[#25D366] text-white rounded-full shadow-[0_8px_30px_rgb(37,211,102,0.4)] flex items-center justify-center active:scale-90 transition-all hover:bg-[#128C7E] border-4 border-white"
-              >
-                <MessageCircle className="w-8 h-8 md:w-10 md:h-10 fill-current" />
-              </motion.button>
-            )}
-          </AnimatePresence>
+          <motion.a 
+            initial={{ scale: 0 }} 
+            animate={{ scale: 1 }} 
+            href={`https://wa.me/${STUDIO_INFO.hostWhatsapp}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-16 h-16 md:w-20 md:h-20 bg-[#25D366] text-white rounded-full shadow-[0_8px_30px_rgb(37,211,102,0.4)] flex items-center justify-center active:scale-90 transition-all hover:bg-[#128C7E] border-4 border-white"
+            title="Falar com o Anfitrião"
+          >
+            <MessageCircle className="w-8 h-8 md:w-10 md:h-10 fill-current" />
+          </motion.a>
         </div>
       </div>
 
-      <AnimatePresence>
-        {isChatOpen && (
-          <motion.div initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }} className="fixed inset-0 z-[60] bg-white flex flex-col sm:inset-auto sm:right-6 sm:bottom-6 sm:w-96 sm:h-[600px] sm:rounded-3xl shadow-2xl overflow-hidden border border-amber-50">
-            <div className="p-4 bg-[#075E54] text-white flex justify-between items-center shadow-md">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-white rounded-xl p-2 flex items-center justify-center">
-                  <Sparkles className="w-6 h-6 text-[#25D366]" />
-                </div>
-                <div className="leading-tight">
-                  <span className="font-bold text-sm block">Concierge AI</span>
-                  <span className="text-[10px] text-emerald-200 font-bold uppercase tracking-widest">{STUDIO_INFO.name}</span>
-                </div>
-              </div>
-              <button onClick={() => setIsChatOpen(false)} className="p-2 hover:bg-white/20 rounded-full transition-colors"><X/></button>
-            </div>
-            <div className="flex-grow overflow-y-auto p-4 space-y-4 bg-[#fdfaf5] hide-scrollbar">
-              {messages.map((msg, i) => (
-                <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[85%] p-4 rounded-3xl text-sm leading-relaxed shadow-sm ${msg.role === 'user' ? 'bg-[#25D366] text-white rounded-br-none' : 'bg-white border border-amber-50 rounded-bl-none text-gray-700'}`}>{msg.text}</div>
-                </div>
-              ))}
-              {isTyping && <div className="text-[10px] text-[#25D366] animate-pulse font-black uppercase tracking-widest pl-2">IA pensando...</div>}
-              <div ref={chatEndRef} />
-            </div>
-            <div className="p-4 border-t flex gap-2 bg-white">
-              <input type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()} placeholder="Tire suas dúvidas..." className="flex-grow p-3 bg-gray-50 rounded-2xl outline-none border border-transparent focus:border-amber-200 transition-all text-sm"/>
-              <button onClick={handleSendMessage} disabled={!inputValue.trim() || isTyping} className="p-3 bg-[#25D366] text-white rounded-2xl disabled:opacity-50 hover:bg-[#128C7E] transition-colors"><Send className="w-5 h-5"/></button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       <footer className="py-12 text-center">
-        <div className="max-w-4xl mx-auto px-6">
-          <p className="text-[10px] md:text-xs text-gray-400 font-black uppercase tracking-[0.4em] mb-2">{STUDIO_INFO.name} • Setor Bueno • Welcome Home</p>
-          <div className="h-px w-20 bg-amber-100 mx-auto"></div>
+        <div className="max-w-4xl mx-auto px-6 flex flex-col items-center gap-4">
+          <img src="/logo.png" alt="Logo" className="w-6 h-6 opacity-40 grayscale hover:grayscale-0 transition-all" />
+          <p className="text-[10px] md:text-xs text-gray-400 font-black uppercase tracking-[0.4em]">{STUDIO_INFO.name} • Setor Bueno • Welcome Home</p>
+          <div className="h-px w-20 bg-amber-100"></div>
         </div>
       </footer>
     </div>
