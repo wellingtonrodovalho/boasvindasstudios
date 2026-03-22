@@ -66,9 +66,9 @@ const STUDIO_INFO = {
   checkinTime: "14:00",
   checkoutTime: "11:00",
   keySafeCode: "0906",
-  hostWhatsapp: "5562985451980",
+  hostWhatsapp: "5562991514568",
   emergencyContacts: [
-    { name: "Suporte Anfitrião (Wellington)", number: "62 98545-1980", type: 'whatsapp' },
+    { name: "Suporte Anfitrião (Wellington)", number: "62 99151-4568", type: 'whatsapp' },
     { name: "Polícia Militar do Estado de Goiás", number: "190", type: 'phone' },
     { name: "SAMU - Atendimento Móvel de Urgência", number: "192", type: 'phone' },
     { name: "Corpo de Bombeiros", number: "193", type: 'phone' },
@@ -669,7 +669,7 @@ const App = () => {
             <p>CAEPF: 269.462.701/001-49 • CRECI: CRECI-GO 42695 • CNAI: 54826</p>
             <div className="flex flex-wrap justify-center gap-x-3 gap-y-1 mt-2">
               <a href="https://www.alugagoias.com.br" target="_blank" rel="noopener noreferrer" className="hover:text-amber-600 transition-colors">www.alugagoias.com.br</a>
-              <a href="https://wa.me/5562985451980" target="_blank" rel="noopener noreferrer" className="hover:text-amber-600 transition-colors">WhatsApp: 62 98545-1980</a>
+              <a href="https://wa.me/5562991514568" target="_blank" rel="noopener noreferrer" className="hover:text-amber-600 transition-colors">WhatsApp: 62 99151-4568</a>
               <a href="mailto:contato@alugagoias.com.br" className="hover:text-amber-600 transition-colors">contato@alugagoias.com.br</a>
             </div>
           </div>
