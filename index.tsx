@@ -136,7 +136,9 @@ Informações Importantes:
 - Nome do Studio: Studio Ipê (Unidades 101A e 101B).
 - Endereço: Setor Bueno, Goiânia.
 - Wi-Fi: Rede "${STUDIO_INFO.wifi}", Senha "${STUDIO_INFO.wifiPass}".
-- Check-in: A partir das ${STUDIO_INFO.checkinTime}. Chaves no cofre no poste amarelo (senha ${STUDIO_INFO.keySafeCode}).
+- Check-in: A partir das ${STUDIO_INFO.checkinTime}.
+- Acesso ao Condomínio: Use a TAG que está no cofre (localizado no poste amarelo na calçada, senha ${STUDIO_INFO.keySafeCode}).
+- Acesso ao Apartamento: Fechadura digital. A senha é o DDD + os 5 dígitos do prefixo do telefone do titular da reserva (ex: se o telefone é 62 98545-1980, a senha é 6298545).
 - Checkout: Até as ${STUDIO_INFO.checkoutTime}. Devolver a TAG na caixa de correspondência 101A no térreo.
 - Regras: Proibido fumar dentro, respeitar silêncio entre 22h-8h, não circular sem camisa nas áreas comuns.
 - Limpeza: R$ 120,00 para limpeza extra com troca de enxoval.
@@ -411,7 +413,7 @@ const App = () => {
                 <section className="bg-white p-6 rounded-3xl border border-amber-100 shadow-sm space-y-4">
                   <div className="flex items-center gap-3">
                     <div className="bg-amber-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm shadow-md flex-shrink-0">I</div>
-                    <h4 className="font-bold text-gray-800 text-lg">Cofre de Chaves</h4>
+                    <h4 className="font-bold text-gray-800 text-lg">Acesso ao Condomínio</h4>
                   </div>
                   <div className="flex items-start gap-3 bg-amber-50/50 p-4 rounded-2xl border border-amber-100">
                     <MapPin className="w-5 h-5 text-amber-600 mt-1 flex-shrink-0" />
@@ -420,9 +422,9 @@ const App = () => {
                   <div className="space-y-3 pl-4 border-l-2 border-amber-100">
                     <div className="flex gap-3 bg-amber-50 p-3 rounded-xl border border-amber-200">
                       <Lock className="w-4 h-4 text-amber-700 mt-0.5" />
-                      <p className="text-sm text-amber-900 font-bold">Senha: {STUDIO_INFO.keySafeCode}</p>
+                      <p className="text-sm text-amber-900 font-bold">Senha do Cofre: {STUDIO_INFO.keySafeCode}</p>
                     </div>
-                    <p className="text-xs text-gray-600">Pressione o botão de liberação esquerdo. Retire a chave e a tag. 🔑</p>
+                    <p className="text-xs text-gray-600">Pressione o botão de liberação esquerdo. Retire a <strong>TAG</strong> de acesso. 🏷️</p>
                     <div className="p-4 bg-rose-50 rounded-2xl border border-rose-100 flex items-start gap-3 mt-2">
                       <AlertCircle className="w-5 h-5 text-rose-500 mt-0.5 flex-shrink-0" />
                       <p className="text-[11px] text-rose-900 font-bold leading-tight">Embaralhe os números após fechar!</p>
@@ -472,11 +474,11 @@ const App = () => {
                       <Lock className="w-20 h-20" />
                     </div>
                     <div className="space-y-4 relative z-10">
-                      <p className="text-[10px] text-amber-400 font-black uppercase tracking-[0.3em]">Senha Digital</p>
+                      <p className="text-[10px] text-amber-400 font-black uppercase tracking-[0.3em]">Senha da Porta</p>
                       <p className="text-xl font-mono tracking-tighter">
-                        <span className="text-amber-500">*</span> ddd + prefixo <span className="text-amber-500">#</span>
+                        DDD + 5 DÍGITOS DO PREFIXO
                       </p>
-                      <p className="text-[10px] text-gray-400">Ex: Celular 62 98545-1980 &rarr; <strong>*6298545#</strong></p>
+                      <p className="text-[10px] text-gray-400">Senha do titular da reserva. <br/>Ex: 62 9<strong>8545</strong>-1980 &rarr; <strong>6298545</strong></p>
                     </div>
                   </div>
                 </div>
