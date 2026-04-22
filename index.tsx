@@ -183,6 +183,58 @@ const LocalSectionItem: React.FC<{ title: string, desc?: string, icon: any, href
 const App = () => {
   const [activeSection, setActiveSection] = useState<Section>('home');
   const [activeCategory, setActiveCategory] = useState<Category>('todos');
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // Index of searchable content
+  const searchableContent = useMemo(() => {
+    const items: { label: string, desc?: string, section?: Section, href?: string, icon: any, category?: string }[] = [
+      // Sections
+      { label: 'Nosso Studio', desc: 'Informações sobre as unidades 101A e 101B', section: 'studio', icon: Home },
+      { label: 'Check-in', desc: 'Instruções de acesso e cofre de chaves', section: 'checkin', icon: Key },
+      { label: 'Guia do Studio', desc: 'Regras da casa, Wifi e limpeza', section: 'casa', icon: LayoutGrid },
+      { label: 'Guia Local', desc: 'Restaurantes, shoppings e lazer na região', section: 'local', icon: MapPin },
+      { label: 'Checkout', desc: 'Procedimentos de saída e devolução da TAG', section: 'checkout', icon: LogOut },
+      { label: 'Emergências', desc: 'Contatos úteis e endereço de socorro', section: 'emergencia', icon: AlertCircle },
+      // Specific Info
+      { label: 'Wifi', desc: `Rede: ${STUDIO_INFO.wifi} | Senha: ${STUDIO_INFO.wifiPass}`, section: 'casa', icon: Wifi },
+      { label: 'Lixo', desc: 'Descarte nas lixeiras do térreo', section: 'casa', icon: Trash2 },
+      { label: 'Ar Condicionado', desc: 'Controles na cabeceira ou bancada', section: 'casa', icon: Tv },
+      { label: 'Elevador', desc: 'Andar 1, saindo à esquerda', section: 'checkin', icon: Building2 },
+    ];
+
+    // Add all local places
+    LOCAL_PLACES.forEach(place => {
+      items.push({
+        label: place.title,
+        desc: place.desc,
+        href: place.href,
+        icon: place.icon,
+        category: CATEGORIES.find(c => c.id === place.category)?.label
+      });
+    });
+
+    // Add emergency contacts
+    STUDIO_INFO.emergencyContacts.forEach(contact => {
+      items.push({
+        label: contact.name,
+        desc: contact.number,
+        section: 'emergencia',
+        icon: contact.type === 'whatsapp' ? MessageCircle : Phone
+      });
+    });
+
+    return items;
+  }, []);
+
+  const searchResults = useMemo(() => {
+    if (!searchTerm.trim()) return [];
+    const normalizedSearch = searchTerm.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    return searchableContent.filter(item => {
+      const label = item.label.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      const desc = (item.desc || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      return label.includes(normalizedSearch) || desc.includes(normalizedSearch);
+    });
+  }, [searchTerm, searchableContent]);
 
   const filteredPlaces = useMemo(() => {
     if (activeCategory === 'todos') return LOCAL_PLACES;
@@ -206,15 +258,85 @@ const App = () => {
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 tracking-tighter italic">{STUDIO_INFO.name}</h1>
                 <p className="text-amber-600 font-bold uppercase tracking-[0.3em] text-xs md:text-sm">Welcome Home • Bueno</p>
               </div>
+
+              {/* Search Bar */}
+              <div className="w-full max-w-md mx-auto relative mt-4">
+                <div className="relative">
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <input
+                    type="text"
+                    placeholder="O que você está procurando?"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full pl-12 pr-12 py-4 bg-white rounded-2xl shadow-sm border border-amber-100 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-300 transition-all text-gray-800 placeholder:text-gray-400"
+                  />
+                  {searchTerm && (
+                    <button 
+                      onClick={() => setSearchTerm('')}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-gray-100 rounded-lg transition-colors"
+                    >
+                      <X className="w-4 h-4 text-gray-400" />
+                    </button>
+                  )}
+                </div>
+
+                {/* Live Search Results */}
+                <AnimatePresence>
+                  {searchTerm.trim().length > 0 && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                      className="absolute top-full left-0 right-0 mt-2 bg-white rounded-3xl shadow-2xl border border-amber-50 overflow-hidden z-[100] max-h-[60vh] overflow-y-auto hide-scrollbar p-2"
+                    >
+                      {searchResults.length > 0 ? (
+                        <div className="space-y-1">
+                          {searchResults.map((item, i) => (
+                            <button
+                              key={i}
+                              onClick={() => {
+                                if (item.section) setActiveSection(item.section);
+                                else if (item.href) window.open(item.href, '_blank');
+                                setSearchTerm('');
+                              }}
+                              className="w-full flex items-center gap-4 p-4 hover:bg-amber-50 rounded-2xl transition-all text-left group"
+                            >
+                              <div className="p-3 bg-amber-100 rounded-xl text-amber-600 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                                <item.icon className="w-5 h-5" />
+                              </div>
+                              <div className="flex-grow min-w-0">
+                                <h4 className="font-bold text-gray-800 text-sm truncate">{item.label}</h4>
+                                {item.desc && <p className="text-[10px] text-gray-500 truncate">{item.desc}</p>}
+                                {item.category && <span className="inline-block mt-1 px-2 py-0.5 bg-gray-100 text-[8px] font-black uppercase text-gray-500 rounded-full">{item.category}</span>}
+                              </div>
+                              <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-amber-500" />
+                            </button>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="p-12 text-center space-y-3">
+                          <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center mx-auto">
+                            <Search className="w-6 h-6 text-gray-200" />
+                          </div>
+                          <p className="text-sm text-gray-500 font-medium italic">Nenhum resultado encontrado para "{searchTerm}"</p>
+                        </div>
+                      )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </header>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-              <Card title="Nosso Studio" icon={Home} color="bg-amber-600" onClick={() => setActiveSection('studio')} />
-              <Card title="Check-in" icon={Key} color="bg-emerald-600" onClick={() => setActiveSection('checkin')} />
-              <Card title="Guia do Studio" icon={LayoutGrid} color="bg-amber-500" onClick={() => setActiveSection('casa')} />
-              <Card title="Guia Local" icon={MapPin} color="bg-sky-600" onClick={() => setActiveSection('local')} />
-              <Card title="Checkout" icon={LogOut} color="bg-rose-600" onClick={() => setActiveSection('checkout')} />
-              <Card title="Emergências" icon={AlertCircle} color="bg-red-700" onClick={() => setActiveSection('emergencia')} />
-            </div>
+            
+            {!searchTerm && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <Card title="Nosso Studio" icon={Home} color="bg-amber-600" onClick={() => setActiveSection('studio')} />
+                <Card title="Check-in" icon={Key} color="bg-emerald-600" onClick={() => setActiveSection('checkin')} />
+                <Card title="Guia do Studio" icon={LayoutGrid} color="bg-amber-500" onClick={() => setActiveSection('casa')} />
+                <Card title="Guia Local" icon={MapPin} color="bg-sky-600" onClick={() => setActiveSection('local')} />
+                <Card title="Checkout" icon={LogOut} color="bg-rose-600" onClick={() => setActiveSection('checkout')} />
+                <Card title="Emergências" icon={AlertCircle} color="bg-red-700" onClick={() => setActiveSection('emergencia')} />
+              </div>
+            )}
           </div>
         );
       case 'studio':
