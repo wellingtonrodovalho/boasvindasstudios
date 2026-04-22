@@ -51,8 +51,7 @@ import {
   Bath,
   Search,
   DoorClosed,
-  Bot,
-  User
+  Bot
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -127,7 +126,19 @@ const Logo = ({ className = "w-8 h-8" }: { className?: string }) => (
 );
 
 // --- Assistant Logic ---
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+let aiInstance: GoogleGenAI | null = null;
+const getAI = () => {
+  if (!aiInstance) {
+    // Safety check for process in browser environment
+    const apiKey = typeof process !== 'undefined' ? process.env.GEMINI_API_KEY : undefined;
+    if (!apiKey) {
+      console.warn("GEMINI_API_KEY is not defined. AI Assistant will not function.");
+      return null;
+    }
+    aiInstance = new GoogleGenAI({ apiKey });
+  }
+  return aiInstance;
+};
 
 const SYSTEM_INSTRUCTION = `
 Você é o Assistente Virtual do Studio Ipê. Seu objetivo é ajudar hóspedes com informações sobre o Studio e a região de Goiânia.
@@ -181,6 +192,14 @@ const ChatAssistant = ({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (o: 
 
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
+
+    const ai = getAI();
+    if (!ai) {
+      setMessages(prev => [...prev, { role: 'user', content: input.trim() }]);
+      setMessages(prev => [...prev, { role: 'assistant', content: "O serviço de assistente virtual ainda não foi configurado corretamente (chave de API ausente). Por favor, fale diretamente com o anfitrião pelo WhatsApp." }]);
+      setInput('');
+      return;
+    }
 
     const userMessage = input.trim();
     setInput('');
