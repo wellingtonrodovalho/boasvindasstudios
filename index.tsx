@@ -1,6 +1,5 @@
-import React, { useState, useMemo, useRef, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { createRoot } from 'react-dom/client';
-import { GoogleGenAI } from "@google/genai";
 import { 
   Home, 
   Key, 
@@ -50,8 +49,7 @@ import {
   Clock,
   Bath,
   Search,
-  DoorClosed,
-  Bot
+  DoorClosed
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -125,182 +123,6 @@ const Logo = ({ className = "w-8 h-8" }: { className?: string }) => (
   </svg>
 );
 
-// --- Assistant Logic ---
-let aiInstance: GoogleGenAI | null = null;
-const getAI = () => {
-  if (!aiInstance) {
-    // Safety check for process in browser environment
-    const apiKey = typeof process !== 'undefined' ? process.env.GEMINI_API_KEY : undefined;
-    if (!apiKey) {
-      console.warn("GEMINI_API_KEY is not defined. AI Assistant will not function.");
-      return null;
-    }
-    aiInstance = new GoogleGenAI({ apiKey });
-  }
-  return aiInstance;
-};
-
-const SYSTEM_INSTRUCTION = `
-Você é o Assistente Virtual do Studio Ipê. Seu objetivo é ajudar hóspedes com informações sobre o Studio e a região de Goiânia.
-
-Seções do Guia do Hóspede:
-1. Nosso Studio: Informações gerais e descrição do espaço.
-2. Check-in: Instruções de entrada, senha do cofre e senha da porta.
-3. Guia do Studio: Wi-Fi, regras, lixo e limpeza.
-4. Guia Local: Dicas de lugares, mercados e lazer.
-5. Checkout: Horário de saída e devolução da TAG.
-6. Emergências: Contatos de socorro e endereço completo.
-
-Informações Detalhadas:
-- Nome do Studio: Studio Ipê (Unidades 101A e 101B).
-- Endereço: Setor Bueno, Goiânia.
-- Wi-Fi: Rede "${STUDIO_INFO.wifi}", Senha "${STUDIO_INFO.wifiPass}".
-- Check-in: A partir das ${STUDIO_INFO.checkinTime}.
-- Acesso ao Condomínio: Use a TAG que está no cofre (localizado no poste amarelo na calçada, senha ${STUDIO_INFO.keySafeCode}).
-- Acesso ao Apartamento: Fechadura digital. A senha é o DDD + os 5 dígitos do prefixo do telefone do titular da reserva (ex: se o telefone é 62 98545-1980, a senha é 6298545).
-- Checkout: Até as ${STUDIO_INFO.checkoutTime}. Devolver a TAG na caixa de correspondência 101A no térreo.
-- Regras: Proibido fumar dentro, respeitar silêncio entre 22h-8h, não circular sem camisa nas áreas comuns.
-- Limpeza: R$ 120,00 para limpeza extra com troca de enxoval.
-- Host: Wellington Rodovalho.
-- Emergências: Contatos detalhados (SAMU 192, Bombeiros 193).
-
-Dicas Locais:
-${LOCAL_PLACES.map(p => `- ${p.title}: ${p.desc || 'Localizado na região.'}`).join('\n')}
-
-Instruções de Resposta:
-- Seja acolhedor e educado.
-- Use português do Brasil.
-- Mantenha respostas concisas e úteis.
-- NÃO use asteriscos (*) ou símbolos de negrito (**) em suas respostas.
-- LOCALIZAÇÃO DA INFORMAÇÃO: Sempre indique em qual seção do guia do hóspede essa informação pode ser visualizada com detalhes (ex: "Você pode ver mais detalhes na seção Check-in").
-- Se não souber a resposta ou for algo complexo, oriente o hóspede a entrar em contato direto com o Wellington pelo WhatsApp ${STUDIO_INFO.hostWhatsapp}.
-`;
-
-const ChatAssistant = ({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (o: boolean) => void }) => {
-  const [messages, setMessages] = useState<{ role: 'user' | 'assistant'; content: string }[]>([
-    { role: 'assistant', content: 'Olá! Sou o assistente do Studio Ipê. Como posso te ajudar hoje?' }
-  ]);
-  const [input, setInput] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
-  }, [messages, isOpen]);
-
-  const handleSend = async () => {
-    if (!input.trim() || isLoading) return;
-
-    const ai = getAI();
-    if (!ai) {
-      setMessages(prev => [...prev, { role: 'user', content: input.trim() }]);
-      setMessages(prev => [...prev, { role: 'assistant', content: "O serviço de assistente virtual ainda não foi configurado corretamente (chave de API ausente). Por favor, fale diretamente com o anfitrião pelo WhatsApp." }]);
-      setInput('');
-      return;
-    }
-
-    const userMessage = input.trim();
-    setInput('');
-    setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
-    setIsLoading(true);
-
-    try {
-      const response = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
-        config: { systemInstruction: SYSTEM_INSTRUCTION },
-        contents: [
-          { role: 'user', parts: [{ text: userMessage }] }
-        ],
-      });
-      
-      const assistantMessage = (response.text || "Desculpe, tive um problema ao processar sua pergunta. Pode falar com o host?").replace(/\*/g, '');
-      setMessages(prev => [...prev, { role: 'assistant', content: assistantMessage }]);
-    } catch (error) {
-      console.error(error);
-      setMessages(prev => [...prev, { role: 'assistant', content: "Ops, algo deu errado. Por favor, tente novamente em instantes." }]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  return (
-    <div className="fixed bottom-24 right-6 z-50 flex flex-col items-end pointer-events-none">
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="w-[calc(100vw-3rem)] sm:w-[380px] h-[500px] bg-white rounded-[2rem] shadow-2xl border border-amber-100 flex flex-col overflow-hidden pointer-events-auto"
-          >
-            <div className="bg-amber-500 p-6 flex items-center justify-between shadow-lg">
-              <div className="flex items-center gap-3">
-                <div className="bg-white/20 p-2 rounded-xl">
-                  <Bot className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-white font-bold text-sm">Assistente Studio Ipê</h3>
-                  <div className="flex items-center gap-1.5">
-                    <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
-                    <span className="text-amber-100 text-[10px] font-bold uppercase tracking-widest">Online</span>
-                  </div>
-                </div>
-              </div>
-              <button 
-                onClick={() => setIsOpen(false)} 
-                className="w-8 h-8 flex items-center justify-center bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div ref={scrollRef} className="flex-grow overflow-y-auto p-4 space-y-4 bg-[#fdfaf5]">
-              {messages.map((m, i) => (
-                <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[85%] p-4 rounded-2xl text-sm leading-relaxed ${m.role === 'user' ? 'bg-amber-500 text-white rounded-tr-none shadow-md' : 'bg-white border border-amber-100 text-gray-700 rounded-tl-none shadow-sm'}`}>
-                    {m.content}
-                  </div>
-                </div>
-              ))}
-              {isLoading && (
-                <div className="flex justify-start">
-                  <div className="bg-white border border-amber-100 p-3 rounded-2xl rounded-tl-none shadow-sm flex gap-1 items-center">
-                    <div className="w-1.5 h-1.5 bg-amber-400 rounded-full animate-bounce [animation-delay:-0.3s]" />
-                    <div className="w-1.5 h-1.5 bg-amber-400 rounded-full animate-bounce [animation-delay:-0.15s]" />
-                    <div className="w-1.5 h-1.5 bg-amber-400 rounded-full animate-bounce" />
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div className="p-4 bg-white border-t border-amber-50">
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                  placeholder="Como posso ajudar?"
-                  className="flex-grow bg-amber-50/50 border border-amber-100 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/20 transition-all"
-                />
-                <button
-                  onClick={handleSend}
-                  disabled={isLoading || !input.trim()}
-                  className="bg-amber-500 text-white p-3 rounded-2xl shadow-lg active:scale-95 transition-all disabled:opacity-50 flex-shrink-0"
-                >
-                  <Send className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-};
-
 const Header = ({ title, onBack }: { title: string, onBack?: () => void }) => (
   <header className="sticky top-0 z-40 w-full bg-white/90 backdrop-blur-md py-4 px-6 border-b border-amber-100 shadow-sm">
     <div className="max-w-4xl mx-auto flex items-center justify-between">
@@ -361,7 +183,6 @@ const LocalSectionItem: React.FC<{ title: string, desc?: string, icon: any, href
 const App = () => {
   const [activeSection, setActiveSection] = useState<Section>('home');
   const [activeCategory, setActiveCategory] = useState<Category>('todos');
-  const [isChatOpen, setIsChatOpen] = useState(false);
 
   const filteredPlaces = useMemo(() => {
     if (activeCategory === 'todos') return LOCAL_PLACES;
@@ -442,7 +263,7 @@ const App = () => {
                 <section className="bg-white p-6 rounded-3xl border border-amber-100 shadow-sm space-y-4">
                   <div className="flex items-center gap-3">
                     <div className="bg-amber-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm shadow-md flex-shrink-0">I</div>
-                    <h4 className="font-bold text-gray-800 text-lg">Acesso ao Condomínio</h4>
+                    <h4 className="font-bold text-gray-800 text-lg">Cofre de Chaves</h4>
                   </div>
                   <div className="flex items-start gap-3 bg-amber-50/50 p-4 rounded-2xl border border-amber-100">
                     <MapPin className="w-5 h-5 text-amber-600 mt-1 flex-shrink-0" />
@@ -451,9 +272,9 @@ const App = () => {
                   <div className="space-y-3 pl-4 border-l-2 border-amber-100">
                     <div className="flex gap-3 bg-amber-50 p-3 rounded-xl border border-amber-200">
                       <Lock className="w-4 h-4 text-amber-700 mt-0.5" />
-                      <p className="text-sm text-amber-900 font-bold">Senha do Cofre: {STUDIO_INFO.keySafeCode}</p>
+                      <p className="text-sm text-amber-900 font-bold">Senha: {STUDIO_INFO.keySafeCode}</p>
                     </div>
-                    <p className="text-xs text-gray-600">Pressione o botão de liberação esquerdo. Retire a <strong>TAG</strong> de acesso. 🏷️</p>
+                    <p className="text-xs text-gray-600">Pressione o botão de liberação esquerdo. Retire a chave e a tag. 🔑</p>
                     <div className="p-4 bg-rose-50 rounded-2xl border border-rose-100 flex items-start gap-3 mt-2">
                       <AlertCircle className="w-5 h-5 text-rose-500 mt-0.5 flex-shrink-0" />
                       <p className="text-[11px] text-rose-900 font-bold leading-tight">Embaralhe os números após fechar!</p>
@@ -503,11 +324,11 @@ const App = () => {
                       <Lock className="w-20 h-20" />
                     </div>
                     <div className="space-y-4 relative z-10">
-                      <p className="text-[10px] text-amber-400 font-black uppercase tracking-[0.3em]">Senha da Porta</p>
+                      <p className="text-[10px] text-amber-400 font-black uppercase tracking-[0.3em]">Senha Digital</p>
                       <p className="text-xl font-mono tracking-tighter">
-                        DDD + 5 DÍGITOS DO PREFIXO
+                        <span className="text-amber-500">*</span> ddd + prefixo <span className="text-amber-500">#</span>
                       </p>
-                      <p className="text-[10px] text-gray-400">Senha do titular da reserva. <br/>Ex: 62 9<strong>8545</strong>-1980 &rarr; <strong>6298545</strong></p>
+                      <p className="text-[10px] text-gray-400">Ex: Celular 62 98545-1980 &rarr; <strong>*6298545#</strong></p>
                     </div>
                   </div>
                 </div>
@@ -812,7 +633,6 @@ const App = () => {
   return (
     <div className="min-h-screen bg-[#fdfaf5] flex flex-col relative antialiased selection:bg-amber-100 selection:text-amber-900">
       <main className="flex-grow w-full">{renderContent()}</main>
-      <ChatAssistant isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
       
       <div className="fixed bottom-6 inset-x-0 px-6 flex justify-between items-end max-w-5xl mx-auto z-50 pointer-events-none">
         <div className="pointer-events-auto">
@@ -824,17 +644,7 @@ const App = () => {
             )}
           </AnimatePresence>
         </div>
-        <div className="flex items-center gap-4 pointer-events-auto">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setIsChatOpen(!isChatOpen)}
-            className={`w-16 h-16 md:w-20 md:h-20 rounded-full shadow-2xl flex items-center justify-center transition-all bg-amber-500 text-white border-4 border-white ${isChatOpen ? 'rotate-90' : ''}`}
-            title="Assistente Virtual"
-          >
-            {isChatOpen ? <X className="w-8 h-8 md:w-10 md:h-10" /> : <Bot className="w-8 h-8 md:w-10 md:h-10" />}
-          </motion.button>
-
+        <div className="pointer-events-auto">
           <motion.a 
             initial={{ scale: 0 }} 
             animate={{ scale: 1 }} 

@@ -2,7 +2,6 @@
   "requestFramePermissions": [
     "geolocation"
   ],
-  "name": "Studio Ipê | Guia do Hóspede",
-  "description": "Guia digital de boas vindas do Studios 101 A",
-  "majorCapabilities": []
+  "name": "Studios Ipê | Guia do Hóspede",
+  "description": "Guia digital de boas vindas dos Studios 101 A e B."
 }
