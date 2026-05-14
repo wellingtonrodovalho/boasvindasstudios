@@ -582,7 +582,7 @@ const App = () => {
                   <Mail className="w-6 h-6 text-amber-400 flex-shrink-0" />
                   <div>
                     <h4 className="font-bold text-amber-400 text-sm">✔ TAG</h4>
-                    <p className="text-[10px] text-gray-300 mt-1 leading-tight">Devolver na caixa 101A (bicicletário/térreo).</p>
+                    <p className="text-[10px] text-gray-300 mt-1 leading-tight">Deixar dentro do apartamento na bancada de pedra.</p>
                   </div>
                 </div>
                 <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex items-start gap-4">
@@ -726,11 +726,11 @@ const App = () => {
                     <h4 className="text-xl font-black uppercase tracking-tight italic">🔑 Devolução da TAG</h4>
                   </div>
                   <p className="text-gray-300 font-medium leading-relaxed">
-                    Após trancar a porta, coloque a TAG na <strong>caixa de correspondência do 101 A</strong>.
+                    Antes de sair, deixe a TAG dentro do apartamento <strong>sobre a bancada de pedra</strong>.
                   </p>
                   <div className="bg-white/5 p-4 rounded-2xl border border-white/10 border-l-4 border-amber-500 mt-4">
                     <p className="text-xs md:text-sm text-amber-100 leading-relaxed font-bold">
-                      Localização: Ao lado do bicicletário, nos fundos, atrás da recepção, no térreo.
+                      Certifique-se de que a porta esteja devidamente trancada ao sair.
                     </p>
                   </div>
                 </div>
