@@ -184,6 +184,7 @@ const App = () => {
   const [activeSection, setActiveSection] = useState<Section>('home');
   const [activeCategory, setActiveCategory] = useState<Category>('todos');
   const [searchTerm, setSearchTerm] = useState('');
+  const [showCoffeeTutorial, setShowCoffeeTutorial] = useState(false);
 
   // Index of searchable content
   const searchableContent = useMemo(() => {
@@ -196,6 +197,7 @@ const App = () => {
       { label: 'Checkout', desc: 'Procedimentos de saída e devolução da TAG', section: 'checkout', icon: LogOut },
       { label: 'Emergências', desc: 'Contatos úteis e endereço de socorro', section: 'emergencia', icon: AlertCircle },
       // Specific Info
+      { label: 'Cafeteira Tres Corações', desc: 'Guia passo a passo de como usar a cafeteira elétrica', section: 'casa', icon: Coffee },
       { label: 'Wifi', desc: `Rede: ${STUDIO_INFO.wifi} | Senha: ${STUDIO_INFO.wifiPass}`, section: 'casa', icon: Wifi },
       { label: 'Lixo', desc: 'Descarte nas lixeiras do térreo', section: 'casa', icon: Trash2 },
       { label: 'Ar Condicionado', desc: 'Controles na cabeceira ou bancada', section: 'casa', icon: Tv },
@@ -295,6 +297,7 @@ const App = () => {
                             <button
                               key={i}
                               onClick={() => {
+                                if (item.label.includes('Cafeteira')) setShowCoffeeTutorial(true);
                                 if (item.section) setActiveSection(item.section);
                                 else if (item.href) window.open(item.href, '_blank');
                                 setSearchTerm('');
@@ -606,6 +609,17 @@ const App = () => {
                     <p className="text-[10px] text-gray-500 mt-1 leading-tight">Descarte nas lixeiras do térreo (atrás da recepção).</p>
                   </div>
                 </div>
+                <motion.button 
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => setShowCoffeeTutorial(true)}
+                  className="bg-amber-50 p-6 rounded-3xl border border-amber-200 flex items-start gap-4 shadow-sm text-left group"
+                >
+                  <Coffee className="w-6 h-6 text-amber-600 flex-shrink-0 group-hover:rotate-12 transition-transform" />
+                  <div>
+                    <h4 className="font-bold text-amber-900 text-sm">☕ Cafeteira</h4>
+                    <p className="text-[10px] text-amber-700 mt-1 leading-tight font-bold">Ver guia passo a passo Tres Corações &rarr;</p>
+                  </div>
+                </motion.button>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -799,9 +813,75 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#fdfaf5] flex flex-col relative antialiased selection:bg-amber-100 selection:text-amber-900">
+    <div className="min-h-screen bg-[#fdfaf5] flex flex-col relative antialiased selection:bg-amber-100 selection:text-amber-900 text-gray-900">
       <main className="flex-grow w-full">{renderContent()}</main>
-      
+
+      <AnimatePresence>
+        {showCoffeeTutorial && (
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+          >
+            <motion.div 
+              initial={{ scale: 0.9, y: 20 }} 
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              className="bg-white w-full max-w-2xl rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh] pointer-events-auto"
+            >
+              <div className="p-6 border-b flex justify-between items-center bg-amber-50">
+                <div className="flex items-center gap-3 text-amber-900">
+                  <div className="p-2 bg-amber-600 rounded-xl text-white">
+                    <Coffee className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-xl font-black tracking-tight">Tutorial Cafeteira Tres</h3>
+                </div>
+                <button onClick={() => setShowCoffeeTutorial(false)} className="p-2 hover:bg-amber-100 rounded-full text-amber-900 transition-colors">
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+              
+              <div className="p-6 overflow-y-auto space-y-8 hide-scrollbar">
+                <div className="grid grid-cols-1 gap-8">
+                  {[
+                    { title: "Energia", desc: "Conecte o cabo na tomada. Atenção: A rede do prédio é 220V.", img: "input_file_4.png" },
+                    { title: "Água", desc: "Encha o reservatório traseiro com água filtrada até o nível indicado.", img: "input_file_7.png" },
+                    { title: "Cápsulas", desc: "Escolha sua cápsula favorita no suporte que deixamos para você.", img: "input_file_0.png" },
+                    { title: "Preparar", desc: "Levante a alavanca superior para abrir o compartimento de cápsulas.", img: "input_file_3.png" },
+                    { title: "Inserir", desc: "Coloque a cápsula na gaveta interna conforme o encaixe.", img: "input_file_6.png" },
+                    { title: "Iniciar", desc: "Feche a alavanca e pressione o botão que pisca com a cor da cápsula.", img: "input_file_2.png" },
+                    { title: "Pronto!", desc: "Aguarde o preparo. A luz ficará fixa quando terminar. Bom café!", img: "input_file_5.png" }
+                  ].map((step, idx) => (
+                    <div key={idx} className="flex flex-col md:flex-row gap-6 items-center pb-8 border-b border-gray-100 last:border-0 last:pb-0">
+                      <div className="w-full md:w-5/12 aspect-[4/3] rounded-3xl overflow-hidden shadow-lg border-4 border-amber-50 flex-shrink-0">
+                        <img src={step.img} alt={step.title} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                      </div>
+                      <div className="w-full md:w-7/12 space-y-3">
+                        <div className="flex items-center gap-3">
+                          <span className="w-8 h-8 bg-amber-600 text-white rounded-full flex items-center justify-center font-bold text-sm shadow-md">{idx + 1}</span>
+                          <h4 className="font-black text-gray-800 text-lg uppercase tracking-tighter">{step.title}</h4>
+                        </div>
+                        <p className="text-gray-500 text-sm leading-relaxed font-medium">{step.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="p-6 bg-gray-50 border-t">
+                <button 
+                  onClick={() => setShowCoffeeTutorial(false)} 
+                  className="w-full bg-amber-600 text-white py-4 rounded-2xl font-black uppercase tracking-widest hover:bg-amber-700 transition-all shadow-xl active:scale-95"
+                >
+                  Entendi, quero café!
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="fixed bottom-6 inset-x-0 px-6 flex justify-between items-end max-w-5xl mx-auto z-50 pointer-events-none">
         <div className="pointer-events-auto">
           <AnimatePresence>
