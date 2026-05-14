@@ -566,6 +566,20 @@ const App = () => {
                       <p className="text-xs text-sky-800 font-bold">Aviso: Não circular sem camisa nas áreas comuns.</p>
                     </div>
                     <p className="text-xs text-gray-600">Mantenha o silêncio entre <strong>22h e 8h</strong>. Respeite as regras para evitar multas.</p>
+                    
+                    <div className="pt-2 border-t border-gray-50 space-y-3">
+                      <p className="text-[10px] text-gray-500 leading-relaxed italic">
+                        Qualquer infração será de <span className="text-rose-600 font-bold text-[11px]">inteira responsabilidade do titular da reserva</span>. Por favor, leia atentamente a convenção.
+                      </p>
+                      <a 
+                        href="https://drive.google.com/file/d/1cLtVy5XkgvhI5Tv7EO_EmMcmPc8I_Gzu/view?usp=sharing" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-2 w-full py-3 bg-sky-600 text-white rounded-xl text-xs font-black uppercase tracking-wider hover:bg-sky-700 transition-all shadow-md active:scale-95"
+                      >
+                        <ExternalLink className="w-4 h-4" /> Ver Convenção Completa
+                      </a>
+                    </div>
                   </section>
                 </div>
               </div>
