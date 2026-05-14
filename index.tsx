@@ -61,7 +61,7 @@ const STUDIO_INFO = {
   name: "Studio Ipê",
   units: ["101A", "101B"],
   address: "Setor Bueno, Goiânia",
-  wifi: "STUDIO IPE-2G",
+  wifi: "Studio_Ipe",
   wifiPass: "RT45101Ipe",
   checkinTime: "14:00",
   checkoutTime: "11:00",
@@ -492,19 +492,51 @@ const App = () => {
                           <div key={i} className="flex-1 bg-[#fdfaf5] h-full rounded-t-full -mt-1"></div>
                         ))}
                       </div>
+                      
+                      {/* QR Code Section */}
                       <div className="w-full space-y-4 text-center">
-                          <div className="space-y-1">
-                             <h4 className="text-xl font-black text-gray-900 uppercase tracking-tighter leading-none">Rede</h4>
-                             <p className="text-base font-bold text-gray-700 font-mono tracking-tight">{STUDIO_INFO.wifi}</p>
+                          <div className="bg-white p-4 rounded-xl shadow-inner inline-block mx-auto">
+                            <img 
+                              src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(`WIFI:S:${STUDIO_INFO.wifi};T:WPA;P:${STUDIO_INFO.wifiPass};;`)}`} 
+                              alt="Wifi QR Code" 
+                              className="w-32 h-32 md:w-40 md:h-40"
+                            />
+                            <p className="text-[10px] text-gray-400 mt-2 font-bold uppercase tracking-widest">Escaneie para Conectar</p>
                           </div>
-                          <div className="space-y-1">
-                             <h4 className="text-xl font-black text-gray-900 uppercase tracking-tighter leading-none">Senha</h4>
-                             <p className="text-base font-bold text-gray-700 font-mono tracking-tight">{STUDIO_INFO.wifiPass}</p>
+
+                          <div className="space-y-4">
+                            <div className="space-y-1">
+                               <h4 className="text-xl font-black text-gray-900 uppercase tracking-tighter leading-none">Rede</h4>
+                               <p className="text-base font-bold text-gray-700 font-mono tracking-tight">{STUDIO_INFO.wifi}</p>
+                            </div>
+                            <div className="space-y-1">
+                               <h4 className="text-xl font-black text-gray-900 uppercase tracking-tighter leading-none">Senha</h4>
+                               <p className="text-base font-bold text-gray-700 font-mono tracking-tight">{STUDIO_INFO.wifiPass}</p>
+                            </div>
                           </div>
                       </div>
-                      <button onClick={() => {navigator.clipboard.writeText(STUDIO_INFO.wifiPass); alert("Senha copiada!");}} className="w-full bg-white py-3 rounded-xl shadow-sm border border-amber-100 flex items-center justify-center gap-2 text-xs font-black uppercase text-amber-700 active:scale-95 transition-all">
-                        <Clipboard className="w-4 h-4"/> Copiar Senha
-                      </button>
+
+                      <div className="grid grid-cols-1 gap-2 w-full mt-2">
+                        <button 
+                          onClick={() => {
+                            navigator.clipboard.writeText(STUDIO_INFO.wifiPass); 
+                            alert("Senha copiada! Agora basta selecionar a rede e colar a senha.");
+                          }} 
+                          className="w-full bg-white py-3 rounded-xl shadow-sm border border-amber-100 flex items-center justify-center gap-2 text-xs font-black uppercase text-amber-700 active:scale-95 transition-all hover:bg-amber-50"
+                        >
+                          <Clipboard className="w-4 h-4"/> Copiar Senha
+                        </button>
+                        
+                        <a 
+                          href={`https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(`WIFI:S:${STUDIO_INFO.wifi};T:WPA;P:${STUDIO_INFO.wifiPass};;`)}`}
+                          download="wifi-qrcode.png"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full bg-amber-500 py-3 rounded-xl shadow-md flex items-center justify-center gap-2 text-xs font-black uppercase text-white active:scale-95 transition-all hover:bg-amber-600"
+                        >
+                          <QrCode className="w-4 h-4"/> Ver QR Code Ampliado
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
