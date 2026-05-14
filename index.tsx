@@ -49,7 +49,12 @@ import {
   Clock,
   Bath,
   Search,
-  DoorClosed
+  DoorClosed,
+  Droplets,
+  ChevronUp,
+  Download,
+  Play,
+  Heart
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -297,7 +302,7 @@ const App = () => {
                             <button
                               key={i}
                               onClick={() => {
-                                if (item.label.includes('Cafeteira')) setShowCoffeeTutorial(true);
+                                if (item.label.toLowerCase().includes('cafeteira')) setShowCoffeeTutorial(true);
                                 if (item.section) setActiveSection(item.section);
                                 else if (item.href) window.open(item.href, '_blank');
                                 setSearchTerm('');
@@ -845,27 +850,47 @@ const App = () => {
               <div className="p-6 overflow-y-auto space-y-8 hide-scrollbar">
                 <div className="grid grid-cols-1 gap-8">
                   {[
-                    { title: "Energia", desc: "Conecte o cabo na tomada. Atenção: A rede do prédio é 220V.", img: "input_file_4.png" },
-                    { title: "Água", desc: "Encha o reservatório traseiro com água filtrada até o nível indicado.", img: "input_file_7.png" },
-                    { title: "Cápsulas", desc: "Escolha sua cápsula favorita no suporte que deixamos para você.", img: "input_file_0.png" },
-                    { title: "Preparar", desc: "Levante a alavanca superior para abrir o compartimento de cápsulas.", img: "input_file_3.png" },
-                    { title: "Inserir", desc: "Coloque a cápsula na gaveta interna conforme o encaixe.", img: "input_file_6.png" },
-                    { title: "Iniciar", desc: "Feche a alavanca e pressione o botão que pisca com a cor da cápsula.", img: "input_file_2.png" },
-                    { title: "Pronto!", desc: "Aguarde o preparo. A luz ficará fixa quando terminar. Bom café!", img: "input_file_5.png" }
+                    { title: "Energia", desc: "Conecte o cabo na tomada. Atenção: A rede do prédio é 220V.", icon: Zap, color: "bg-blue-600", light: "bg-blue-50", text: "text-blue-600" },
+                    { title: "Água", desc: "Encha o reservatório traseiro com água filtrada até o nível indicado.", icon: Droplets, color: "bg-sky-500", light: "bg-sky-50", text: "text-sky-500" },
+                    { title: "Cápsulas", desc: "Escolha sua cápsula favorita no suporte que deixamos para você.", icon: LayoutGrid, color: "bg-orange-600", light: "bg-orange-50", text: "text-orange-600" },
+                    { title: "Preparar", desc: "Levante a alavanca superior para abrir o compartimento de cápsulas.", icon: ChevronUp, color: "bg-gray-700", light: "bg-gray-50", text: "text-gray-700" },
+                    { title: "Inserir", desc: "Coloque a cápsula na gaveta interna conforme o encaixe.", icon: Download, color: "bg-amber-800", light: "bg-amber-50", text: "text-amber-800" },
+                    { title: "Iniciar", desc: "Feche a alavanca e pressione o botão correspondente à cor da cápsula.", icon: Play, color: "bg-emerald-600", light: "bg-emerald-50", text: "text-emerald-600" },
+                    { title: "Pronto!", desc: "Aguarde o preparo. A luz ficará fixa quando terminar. Bom café!", icon: Coffee, color: "bg-rose-600", light: "bg-rose-50", text: "text-rose-600" }
                   ].map((step, idx) => (
                     <div key={idx} className="flex flex-col md:flex-row gap-6 items-center pb-8 border-b border-gray-100 last:border-0 last:pb-0">
-                      <div className="w-full md:w-5/12 aspect-[4/3] rounded-3xl overflow-hidden shadow-lg border-4 border-amber-50 flex-shrink-0">
-                        <img src={step.img} alt={step.title} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
-                      </div>
-                      <div className="w-full md:w-7/12 space-y-3">
-                        <div className="flex items-center gap-3">
-                          <span className="w-8 h-8 bg-amber-600 text-white rounded-full flex items-center justify-center font-bold text-sm shadow-md">{idx + 1}</span>
-                          <h4 className="font-black text-gray-800 text-lg uppercase tracking-tighter">{step.title}</h4>
+                      <div className={`w-full md:w-4/12 aspect-square rounded-3xl overflow-hidden shadow-lg border-4 flex-shrink-0 flex items-center justify-center relative ${step.light} ${step.color.replace('bg-', 'border-').replace('600', '200').replace('500', '200').replace('800', '200').replace('700', '200')}`}>
+                        <step.icon className={`w-16 h-16 ${step.text}`} strokeWidth={1.5} />
+                        <div className={`absolute top-4 left-4 w-8 h-8 ${step.color} text-white rounded-full flex items-center justify-center font-bold shadow-md text-sm`}>
+                          {idx + 1}
                         </div>
-                        <p className="text-gray-500 text-sm leading-relaxed font-medium">{step.desc}</p>
+                      </div>
+                      <div className="w-full md:w-8/12 space-y-3">
+                        <h4 className={`font-black text-2xl uppercase tracking-tighter ${step.text}`}>{step.title}</h4>
+                        <p className="text-gray-600 text-base leading-relaxed font-medium">{step.desc}</p>
                       </div>
                     </div>
                   ))}
+                </div>
+                
+                {/* Visual Section for "Cafézinho" */}
+                <div className="pt-8 flex flex-col items-center justify-center text-center space-y-4">
+                  <div className="relative">
+                    <motion.div 
+                      animate={{ scale: [1, 1.1, 1] }} 
+                      transition={{ duration: 2, repeat: Infinity }}
+                      className="w-24 h-24 bg-amber-100 rounded-full flex items-center justify-center"
+                    >
+                      <Coffee className="w-12 h-12 text-amber-600" strokeWidth={1.5} />
+                    </motion.div>
+                    <div className="absolute -top-1 -right-1 w-6 h-6 bg-rose-500 rounded-full flex items-center justify-center shadow-lg">
+                      <Heart className="w-3 h-3 text-white fill-current" />
+                    </div>
+                  </div>
+                  <div className="space-y-1">
+                    <h5 className="font-black text-amber-900 uppercase tracking-widest text-sm">Aproveite seu café</h5>
+                    <p className="text-xs text-amber-700 italic">Feito com carinho no Studio Ipê</p>
+                  </div>
                 </div>
               </div>
 
