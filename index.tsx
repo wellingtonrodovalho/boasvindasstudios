@@ -89,13 +89,13 @@ const STUDIO_INFO = {
 };
 
 const CATEGORIES: { id: Category, label: string, icon: any, color: string }[] = [
-  { id: 'todos', label: 'Todos', icon: LayoutGrid, color: 'bg-amber-600' },
-  { id: 'saude', label: 'Saúde', icon: HeartPulse, color: 'bg-rose-500' },
-  { id: 'lazer', label: 'Lazer', icon: Palmtree, color: 'bg-emerald-500' },
-  { id: 'compras', label: 'Compras', icon: ShoppingBag, color: 'bg-sky-500' },
-  { id: 'bancos', label: 'Bancos', icon: Landmark, color: 'bg-amber-700' },
-  { id: 'feiras', label: 'Feiras', icon: Store, color: 'bg-indigo-500' },
-  { id: 'gastronomia', label: 'Comer', icon: Coffee, color: 'bg-orange-500' },
+  { id: 'todos', label: 'Todos', icon: LayoutGrid, color: 'bg-[#009B3A]' },
+  { id: 'saude', label: 'Saúde', icon: HeartPulse, color: 'bg-[#002776]' },
+  { id: 'lazer', label: 'Lazer', icon: Palmtree, color: 'bg-[#009B3A]' },
+  { id: 'compras', label: 'Compras', icon: ShoppingBag, color: 'bg-yellow-500' },
+  { id: 'bancos', label: 'Bancos', icon: Landmark, color: 'bg-[#002776]' },
+  { id: 'feiras', label: 'Feiras', icon: Store, color: 'bg-emerald-700' },
+  { id: 'gastronomia', label: 'Comer', icon: Coffee, color: 'bg-amber-600' },
 ];
 
 const getMapsLink = (query: string) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query + " Goiânia")}`;
@@ -119,31 +119,20 @@ const LOCAL_PLACES = [
 // --- Components ---
 const Logo = ({ className = "w-8 h-8" }: { className?: string }) => (
   <svg viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-    <path d="M256 460V180" stroke="#5c4017" strokeWidth="44" strokeLinecap="round"/>
-    <path d="M256 380L120 280" stroke="#5c4017" strokeWidth="44" strokeLinecap="round"/>
-    <path d="M256 380L392 280" stroke="#5c4017" strokeWidth="44" strokeLinecap="round"/>
-    <circle cx="256" cy="150" r="110" fill="#f1b51c"/>
-    <circle cx="90" cy="300" r="95" fill="#f1b51c"/>
-    <circle cx="422" cy="300" r="95" fill="#f1b51c"/>
+    <path d="M256 460V180" stroke="#009B3A" strokeWidth="44" strokeLinecap="round"/>
+    <path d="M256 380L120 280" stroke="#009B3A" strokeWidth="44" strokeLinecap="round"/>
+    <path d="M256 380L392 280" stroke="#009B3A" strokeWidth="44" strokeLinecap="round"/>
+    <circle cx="256" cy="150" r="110" fill="#FEE101"/>
+    <circle cx="90" cy="300" r="95" fill="#002776"/>
+    <circle cx="422" cy="300" r="95" fill="#009B3A"/>
   </svg>
 );
 
-const Header = ({ title, onBack }: { title: string, onBack?: () => void }) => (
-  <header className="sticky top-0 z-40 w-full bg-white/90 backdrop-blur-md py-4 px-6 border-b border-amber-100 shadow-sm">
-    <div className="max-w-4xl mx-auto flex items-center justify-between">
-      <div className="flex items-center gap-4">
-        {onBack && (
-          <button onClick={onBack} className="p-2 hover:bg-amber-50 rounded-full transition-colors text-amber-600">
-            <ArrowLeft className="w-5 h-5" />
-          </button>
-        )}
-        <h1 className="text-xl font-bold text-gray-800 tracking-tight">{title}</h1>
-      </div>
-      <div className="flex items-center gap-2">
-        <Logo className="w-8 h-8" />
-      </div>
-    </div>
-  </header>
+const Header = ({ title }: { title: string, onBack?: () => void }) => (
+  <div className="flex items-center gap-3 py-3 border-b border-[#009B3A]/10 mb-5 bg-[#009B3A]/5 p-3.5 rounded-2xl">
+    <div className="w-2.5 h-6 bg-[#009B3A] rounded-full"></div>
+    <h2 className="text-lg font-black text-[#002776] tracking-tight uppercase">{title}</h2>
+  </div>
 );
 
 const Card = ({ title, icon: Icon, color, onClick }: { title: string, icon: any, color: string, onClick: () => void }) => (
@@ -154,12 +143,12 @@ const Card = ({ title, icon: Icon, color, onClick }: { title: string, icon: any,
     className="w-full p-5 flex items-center justify-between rounded-2xl bg-white shadow-sm border border-gray-100 group transition-all hover:shadow-md h-full text-left"
   >
     <div className="flex items-center gap-4">
-      <div className={`p-3 rounded-xl ${color} shadow-sm group-hover:shadow-amber-200 transition-all flex-shrink-0`}>
+      <div className={`p-3 rounded-xl ${color} shadow-sm group-hover:shadow-emerald-200 transition-all flex-shrink-0`}>
         <Icon className="w-6 h-6 text-white" />
       </div>
       <span className="text-lg font-semibold text-gray-700 leading-tight">{title}</span>
     </div>
-    <ChevronRight className="w-5 h-5 text-gray-300 group-hover:text-amber-500 transition-colors flex-shrink-0" />
+    <ChevronRight className="w-5 h-5 text-gray-300 group-hover:text-[#002776] transition-colors flex-shrink-0" />
   </motion.button>
 );
 
@@ -170,20 +159,29 @@ const LocalSectionItem: React.FC<{ title: string, desc?: string, icon: any, href
     href={href} 
     target="_blank" 
     rel="noopener noreferrer"
-    className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex gap-4 hover:border-amber-300 transition-all group active:scale-[0.98] h-full"
+    className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex gap-4 hover:border-[#009B3A] transition-all group active:scale-[0.98] h-full"
   >
-    <div className={`w-10 h-10 ${color || 'bg-amber-50'} rounded-xl flex-shrink-0 flex items-center justify-center font-black transition-colors`}>
-      <Icon className={`w-5 h-5 ${color ? 'text-white' : 'text-amber-600'}`} />
+    <div className={`w-10 h-10 ${color || 'bg-[#009B3A]/10'} rounded-xl flex-shrink-0 flex items-center justify-center font-black transition-colors`}>
+      <Icon className={`w-5 h-5 ${color ? 'text-white' : 'text-[#009B3A]'}`} />
     </div>
     <div className="flex-grow">
       <div className="flex justify-between items-center mb-1">
         <h4 className="font-bold text-gray-800 text-sm tracking-tight">{title}</h4>
-        <ExternalLink className="w-3 h-3 text-gray-300 group-hover:text-amber-500" />
+        <ExternalLink className="w-3 h-3 text-gray-300 group-hover:text-[#002776]" />
       </div>
       {desc && <p className="text-gray-500 text-[11px] leading-relaxed">{desc}</p>}
     </div>
   </motion.a>
 );
+
+const NAVIGATION_TABS = [
+  { id: 'studio' as Section, title: 'Nosso Studio', icon: Home },
+  { id: 'checkin' as Section, title: 'Check-In', icon: Key },
+  { id: 'casa' as Section, title: 'Guia Studio', icon: LayoutGrid },
+  { id: 'local' as Section, title: 'Guia Local', icon: MapPin },
+  { id: 'checkout' as Section, title: 'Checkout', icon: LogOut },
+  { id: 'emergencia' as Section, title: 'Emergências', icon: AlertCircle },
+];
 
 const App = () => {
   const [activeSection, setActiveSection] = useState<Section>('home');
@@ -818,8 +816,69 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#fdfaf5] flex flex-col relative antialiased selection:bg-amber-100 selection:text-amber-900 text-gray-900">
-      <main className="flex-grow w-full">{renderContent()}</main>
+    <div className="min-h-screen bg-[#f4faf4] flex flex-col relative antialiased selection:bg-yellow-200 selection:text-[#002776] text-gray-900">
+      
+      {/* Dynamic Header Clima da Copa */}
+      <header className="sticky top-0 z-50 w-full bg-[#009B3A] text-white py-3 px-4 shadow-md border-b-[5px] border-[#FEE101]">
+        <div className="max-w-5xl mx-auto flex items-center justify-between">
+          <button 
+            onClick={() => { setActiveSection('home'); setSearchTerm(''); }} 
+            className="flex items-center gap-2.5 text-left hover:opacity-95 active:scale-95 transition-all"
+            title="Ir para a Página Inicial"
+          >
+            <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center p-1.5 shadow-inner">
+              <Logo className="w-full h-full" />
+            </div>
+            <div>
+              <h1 className="text-base sm:text-lg font-black tracking-tighter uppercase flex items-center gap-1.5 leading-none">
+                {STUDIO_INFO.name} <span className="text-[#FEE101] text-xs">🇧🇷 Copa</span>
+              </h1>
+              <p className="text-[9px] text-yellow-100 font-bold uppercase tracking-widest leading-none mt-0.5">Bueno • Goiânia</p>
+            </div>
+          </button>
+          
+          <div className="flex items-center gap-2">
+            <span className="hidden xs:inline-block px-2.5 py-1 bg-[#002776] text-white border border-white/20 text-[9px] font-black rounded-lg uppercase tracking-wider shadow-sm animate-pulse">
+              Rumo ao Hexa! ⚽️🏆
+            </span>
+          </div>
+        </div>
+      </header>
+
+      {/* Persistent & Compact Navigation Tabs - Always visible & fixed at the top */}
+      <nav className="sticky top-[69px] z-40 w-full bg-white/95 backdrop-blur-md border-b border-[#009B3A]/20 shadow-sm py-2 px-3">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-1 md:gap-2">
+            {NAVIGATION_TABS.map((tab) => {
+              const isActive = activeSection === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => {
+                    setActiveSection(tab.id);
+                    setSearchTerm(''); // Reset search when navigating sections
+                  }}
+                  className={`flex flex-col sm:flex-row items-center justify-center gap-1 md:gap-1.5 p-1.5 md:p-2.5 rounded-xl border transition-all active:scale-95 ${
+                    isActive 
+                      ? 'bg-[#009B3A] text-white border-[#FEE101] shadow-md scale-[1.01]' 
+                      : 'bg-white text-gray-700 hover:bg-emerald-50 border-gray-100'
+                  }`}
+                >
+                  <tab.icon className={`w-4 h-4 ${isActive ? 'text-[#FEE101]' : 'text-[#009B3A]'}`} strokeWidth={isActive ? 2.5 : 1.8} />
+                  <span className={`text-[10px] md:text-xs font-bold leading-none truncate ${isActive ? 'text-white font-black' : 'text-gray-700'}`}>
+                    {tab.title}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </nav>
+
+      {/* Main Content Render */}
+      <main className="flex-grow w-full max-w-5xl mx-auto px-4 md:px-6 py-6 pb-24">
+        {renderContent()}
+      </main>
 
       <AnimatePresence>
         {showCoffeeTutorial && (
@@ -833,16 +892,16 @@ const App = () => {
               initial={{ scale: 0.9, y: 20 }} 
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="bg-white w-full max-w-2xl rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh] pointer-events-auto"
+              className="bg-white w-full max-w-2xl rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh] pointer-events-auto border-4 border-[#009B3A]"
             >
-              <div className="p-6 border-b flex justify-between items-center bg-amber-50">
-                <div className="flex items-center gap-3 text-amber-900">
-                  <div className="p-2 bg-amber-600 rounded-xl text-white">
+              <div className="p-6 border-b flex justify-between items-center bg-[#009B3A]/5">
+                <div className="flex items-center gap-3 text-[#009B3A]">
+                  <div className="p-2 bg-[#009B3A] rounded-xl text-white">
                     <Coffee className="w-6 h-6" />
                   </div>
-                  <h3 className="text-xl font-black tracking-tight">Tutorial Cafeteira Tres</h3>
+                  <h3 className="text-xl font-bold tracking-tight uppercase">Tutorial Cafeteira Tres</h3>
                 </div>
-                <button onClick={() => setShowCoffeeTutorial(false)} className="p-2 hover:bg-amber-100 rounded-full text-amber-900 transition-colors">
+                <button onClick={() => setShowCoffeeTutorial(false)} className="p-2 hover:bg-[#009B3A]/10 rounded-full text-[#009B3A] transition-colors">
                   <X className="w-6 h-6" />
                 </button>
               </div>
@@ -879,25 +938,25 @@ const App = () => {
                     <motion.div 
                       animate={{ scale: [1, 1.1, 1] }} 
                       transition={{ duration: 2, repeat: Infinity }}
-                      className="w-24 h-24 bg-amber-100 rounded-full flex items-center justify-center"
+                      className="w-24 h-24 bg-emerald-50 rounded-full flex items-center justify-center border-2 border-[#009B3A]/20"
                     >
-                      <Coffee className="w-12 h-12 text-amber-600" strokeWidth={1.5} />
+                      <Coffee className="w-12 h-12 text-[#009B3A]" strokeWidth={1.5} />
                     </motion.div>
-                    <div className="absolute -top-1 -right-1 w-6 h-6 bg-rose-500 rounded-full flex items-center justify-center shadow-lg">
-                      <Heart className="w-3 h-3 text-white fill-current" />
+                    <div className="absolute -top-1 -right-1 w-6 h-6 bg-[#009B3A] rounded-full flex items-center justify-center shadow-lg">
+                      <Heart className="w-3 h-3 text-[#FEE101] fill-current" />
                     </div>
                   </div>
                   <div className="space-y-1">
-                    <h5 className="font-black text-amber-900 uppercase tracking-widest text-sm">Aproveite seu café</h5>
-                    <p className="text-xs text-amber-700 italic">Feito com carinho no Studio Ipê</p>
+                    <h5 className="font-bold text-[#002776] uppercase tracking-widest text-sm">Aproveite seu café</h5>
+                    <p className="text-xs text-[#009B3A] italic font-semibold">Feito com carinho no Studio Ipê</p>
                   </div>
                 </div>
               </div>
 
-              <div className="p-6 bg-gray-50 border-t">
+              <div className="p-6 bg-gray-50 border-t flex gap-4">
                 <button 
                   onClick={() => setShowCoffeeTutorial(false)} 
-                  className="w-full bg-amber-600 text-white py-4 rounded-2xl font-black uppercase tracking-widest hover:bg-amber-700 transition-all shadow-xl active:scale-95"
+                  className="w-full bg-[#009B3A] text-[#FEE101] py-4 rounded-2xl font-black uppercase tracking-widest hover:bg-[#007A2E] transition-all shadow-xl active:scale-95"
                 >
                   Entendi, quero café!
                 </button>
@@ -907,12 +966,20 @@ const App = () => {
         )}
       </AnimatePresence>
 
+      {/* Floating Buttons: WhatsApp & Home Section */}
       <div className="fixed bottom-6 inset-x-0 px-6 flex justify-between items-end max-w-5xl mx-auto z-50 pointer-events-none">
         <div className="pointer-events-auto">
           <AnimatePresence>
             {activeSection !== 'home' && (
-              <motion.button initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }} onClick={() => setActiveSection('home')} className="w-14 h-14 bg-white text-amber-600 rounded-2xl shadow-xl flex items-center justify-center border border-amber-100 active:scale-90 transition-all hover:bg-amber-50">
-                <Home className="w-6 h-6" />
+              <motion.button 
+                initial={{ scale: 0 }} 
+                animate={{ scale: 1 }} 
+                exit={{ scale: 0 }} 
+                onClick={() => setActiveSection('home')} 
+                className="w-14 h-14 bg-white text-[#009B3A] rounded-2xl shadow-xl flex items-center justify-center border-4 border-[#009B3A] active:scale-90 transition-all hover:bg-emerald-50"
+                title="Voltar ao Início"
+              >
+                <Home className="w-6 h-6 animate-pulse" />
               </motion.button>
             )}
           </AnimatePresence>
@@ -924,7 +991,7 @@ const App = () => {
             href={`https://wa.me/${STUDIO_INFO.hostWhatsapp}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-16 h-16 md:w-20 md:h-20 bg-[#25D366] text-white rounded-full shadow-[0_8px_30px_rgb(37,211,102,0.4)] flex items-center justify-center active:scale-90 transition-all hover:bg-[#128C7E] border-4 border-white"
+            className="w-16 h-16 md:w-20 md:h-20 bg-[#25D366] text-white rounded-full shadow-[0_8px_30px_rgba(37,211,102,0.4)] flex items-center justify-center active:scale-90 transition-all hover:bg-[#128C7E] border-4 border-white"
             title="Falar com o Anfitrião"
           >
             <MessageCircle className="w-8 h-8 md:w-10 md:h-10 fill-current" />
@@ -932,22 +999,22 @@ const App = () => {
         </div>
       </div>
 
-      <footer className="py-12 text-center">
+      <footer className="py-12 bg-[#009B3A]/5 border-t border-[#009B3A]/10 text-center">
         <div className="max-w-4xl mx-auto px-6 flex flex-col items-center gap-4">
-          <Logo className="w-6 h-6 opacity-40 grayscale hover:grayscale-0 transition-all" />
-          <p className="text-[10px] md:text-xs text-gray-400 font-black uppercase tracking-[0.4em]">{STUDIO_INFO.name} • Setor Bueno • Welcome Home</p>
+          <Logo className="w-8 h-8 opacity-60" />
+          <p className="text-[10px] md:text-xs text-[#002776] font-black uppercase tracking-[0.4em]">{STUDIO_INFO.name} • Bueno • Welcome Home • 🇧🇷 Copa</p>
           
-          <div className="space-y-1 text-[9px] md:text-[10px] text-gray-400 font-medium uppercase tracking-wider max-w-lg">
-            <p>Corretor de Imóveis: <span className="text-gray-500 font-bold">WELLINGTON RODOVALHO FONSECA</span></p>
+          <div className="space-y-1 text-[9px] md:text-[10px] text-gray-500 font-medium uppercase tracking-wider max-w-lg">
+            <p className="text-[#002776] font-bold">Corretor de Imóveis: <span className="font-extrabold text-[#009B3A]">WELLINGTON RODOVALHO FONSECA</span></p>
             <p>CAEPF: 269.462.701/001-49 • CRECI: CRECI-GO 42695 • CNAI: 54826</p>
             <div className="flex flex-wrap justify-center gap-x-3 gap-y-1 mt-2">
-              <a href="https://www.alugagoias.com.br" target="_blank" rel="noopener noreferrer" className="hover:text-amber-600 transition-colors">www.alugagoias.com.br</a>
-              <a href="https://wa.me/5562991514568" target="_blank" rel="noopener noreferrer" className="hover:text-amber-600 transition-colors">WhatsApp: 62 99151-4568</a>
-              <a href="mailto:contato@alugagoias.com.br" className="hover:text-amber-600 transition-colors">contato@alugagoias.com.br</a>
+              <a href="https://www.alugagoias.com.br" target="_blank" rel="noopener noreferrer" className="text-[#009B3A] hover:text-[#002776] font-bold transition-colors">www.alugagoias.com.br</a>
+              <a href="https://wa.me/5562991514568" target="_blank" rel="noopener noreferrer" className="text-[#009B3A] hover:text-[#002776] font-bold transition-colors">WhatsApp: 62 99151-4568</a>
+              <a href="mailto:contato@alugagoias.com.br" className="text-[#009B3A] hover:text-[#002776] font-bold transition-colors">contato@alugagoias.com.br</a>
             </div>
           </div>
 
-          <div className="h-px w-20 bg-amber-100 mt-2"></div>
+          <div className="h-1 w-20 bg-[#FEE101] rounded-full mt-2"></div>
         </div>
       </footer>
     </div>
