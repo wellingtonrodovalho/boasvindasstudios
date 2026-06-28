@@ -188,6 +188,7 @@ const App = () => {
   const [activeCategory, setActiveCategory] = useState<Category>('todos');
   const [searchTerm, setSearchTerm] = useState('');
   const [showCoffeeTutorial, setShowCoffeeTutorial] = useState(false);
+  const [showTrashGuide, setShowTrashGuide] = useState(false);
 
   // Index of searchable content
   const searchableContent = useMemo(() => {
@@ -605,13 +606,17 @@ const App = () => {
                     <p className="text-[10px] text-gray-300 mt-1 leading-tight">Deixar dentro do apartamento na bancada de pedra.</p>
                   </div>
                 </div>
-                <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex items-start gap-4">
-                  <Trash2 className="w-6 h-6 text-amber-500 flex-shrink-0" />
+                <motion.button 
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => setShowTrashGuide(true)}
+                  className="bg-emerald-50/40 p-6 rounded-3xl border border-[#009B3A]/20 flex items-start gap-4 shadow-sm text-left group hover:border-[#009B3A] transition-all"
+                >
+                  <Trash2 className="w-6 h-6 text-[#009B3A] flex-shrink-0 group-hover:rotate-12 transition-transform" />
                   <div>
-                    <h4 className="font-bold text-gray-800 text-sm">🗑 Lixo</h4>
-                    <p className="text-[10px] text-gray-500 mt-1 leading-tight">Descarte nas lixeiras do térreo (atrás da recepção).</p>
+                    <h4 className="font-bold text-[#002776] text-sm">🗑 Lixo & Reciclagem</h4>
+                    <p className="text-[10px] text-gray-500 mt-1 leading-tight font-bold text-[#009B3A]">Ver guia completo de descarte &rarr;</p>
                   </div>
-                </div>
+                </motion.button>
                 <motion.button 
                   whileTap={{ scale: 0.98 }}
                   onClick={() => setShowCoffeeTutorial(true)}
@@ -701,17 +706,23 @@ const App = () => {
                     </p>
                   </div>
                 </div>
-                <div className="bg-white p-6 rounded-3xl border border-amber-100 shadow-sm flex items-start gap-4">
-                  <div className="bg-emerald-500 p-3 rounded-2xl text-white shadow-md flex-shrink-0">
-                    <Trash2 className="w-6 h-6" />
+                <motion.button
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => setShowTrashGuide(true)}
+                  className="bg-white p-6 rounded-3xl border border-emerald-100 hover:border-[#009B3A] shadow-sm flex items-start gap-4 text-left group transition-all w-full"
+                >
+                  <div className="bg-[#009B3A] p-3 rounded-2xl text-white shadow-md flex-shrink-0 group-hover:rotate-6 transition-transform">
+                    <Trash2 className="w-6 h-6 text-[#FEE101]" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-gray-900 text-sm uppercase tracking-wider mb-1">🗑️ Lixo</h4>
+                    <h4 className="font-bold text-[#002776] text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                      🗑️ Lixo & Reciclagem <span className="text-[10px] text-[#009B3A] lowercase font-bold font-sans">Ver Guia</span>
+                    </h4>
                     <p className="text-sm text-gray-600 font-medium leading-relaxed">
-                      Deposite o lixo nas lixeiras localizadas no térreo, ao lado do bicicletário, atrás da recepção.
+                      Deposite o lixo nas lixeiras localizadas no térreo (atrás da recepção). Clique para ver as instruções de reciclagem.
                     </p>
                   </div>
-                </div>
+                </motion.button>
                 <div className="bg-white p-6 rounded-3xl border border-amber-100 shadow-sm flex items-start gap-4">
                   <div className="bg-orange-500 p-3 rounded-2xl text-white shadow-md flex-shrink-0">
                     <Zap className="w-6 h-6" />
@@ -959,6 +970,101 @@ const App = () => {
                   className="w-full bg-[#009B3A] text-[#FEE101] py-4 rounded-2xl font-black uppercase tracking-widest hover:bg-[#007A2E] transition-all shadow-xl active:scale-95"
                 >
                   Entendi, quero café!
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {showTrashGuide && (
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+          >
+            <motion.div 
+              initial={{ scale: 0.9, y: 20 }} 
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              className="bg-white w-full max-w-2xl rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh] pointer-events-auto border-4 border-[#009B3A]"
+            >
+              <div className="p-6 border-b flex justify-between items-center bg-[#009B3A]/5">
+                <div className="flex items-center gap-3 text-[#009B3A]">
+                  <div className="p-2 bg-[#009B3A] rounded-xl text-white">
+                    <Trash2 className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-xl font-bold tracking-tight uppercase">Guia de Lixo e Descarte 🇧🇷</h3>
+                </div>
+                <button onClick={() => setShowTrashGuide(false)} className="p-2 hover:bg-[#009B3A]/10 rounded-full text-[#009B3A] transition-colors">
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+              
+              <div className="p-6 overflow-y-auto space-y-6 hide-scrollbar">
+                {/* The Main Image requested by the user */}
+                <div className="relative rounded-2xl overflow-hidden border border-[#009B3A]/20 shadow-md">
+                  <img 
+                    src="input_file_0.png" 
+                    alt="Guia Descarte Correto" 
+                    className="w-full h-auto object-contain"
+                  />
+                </div>
+
+                {/* Highly structured, copyable and accessible summary matching the image content */}
+                <div className="bg-[#f4faf4] p-5 rounded-2xl border border-[#009B3A]/10 space-y-4 text-left">
+                  <h4 className="font-bold text-[#002776] text-sm uppercase tracking-wider flex items-center gap-2">
+                    ⚽ Informações Importantes do Condomínio
+                  </h4>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="bg-white p-4 rounded-xl border border-[#009B3A]/10 space-y-2">
+                      <h5 className="font-bold text-[#009B3A] text-xs uppercase">♻️ LIXO RECICLÁVEL</h5>
+                      <ul className="text-xs text-gray-600 space-y-1 list-disc pl-4 leading-relaxed font-medium">
+                        <li>Papel e papelão</li>
+                        <li>Plásticos</li>
+                        <li>Metais</li>
+                        <li>Vidros <span className="text-[10px] font-bold text-[#002776]">(bem acondicionados)</span></li>
+                      </ul>
+                    </div>
+                    
+                    <div className="bg-white p-4 rounded-xl border border-[#009B3A]/10 space-y-2">
+                      <h5 className="font-bold text-emerald-700 text-xs uppercase">🍏 LIXO ORGÂNICO / NÃO RECICLÁVEL</h5>
+                      <ul className="text-xs text-gray-600 space-y-1 list-disc pl-4 leading-relaxed font-medium">
+                        <li>Restos de alimentos</li>
+                        <li>Papel higiênico e guardanapos usados</li>
+                        <li>Resíduos orgânicos gerais</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="border-t border-[#009B3A]/10 pt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px] text-[#002776] font-bold">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-[#009B3A]" />
+                      <span>Coloque o lixo em sacos bem fechados.</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-[#009B3A]" />
+                      <span>Não deixe sacos de lixo no chão.</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-[#009B3A]" />
+                      <span>Feche as tampas após o descarte.</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-[#009B3A]" />
+                      <span>Identifique vidros quebrados se houver.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-6 bg-gray-50 border-t flex gap-4">
+                <button 
+                  onClick={() => setShowTrashGuide(false)} 
+                  className="w-full bg-[#009B3A] text-[#FEE101] py-4 rounded-2xl font-black uppercase tracking-widest hover:bg-[#007A2E] transition-all shadow-xl active:scale-95"
+                >
+                  Entendi, vou colaborar!
                 </button>
               </div>
             </motion.div>
