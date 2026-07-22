@@ -89,12 +89,12 @@ const STUDIO_INFO = {
 };
 
 const CATEGORIES: { id: Category, label: string, icon: any, color: string }[] = [
-  { id: 'todos', label: 'Todos', icon: LayoutGrid, color: 'bg-[#009B3A]' },
-  { id: 'saude', label: 'Saúde', icon: HeartPulse, color: 'bg-[#002776]' },
-  { id: 'lazer', label: 'Lazer', icon: Palmtree, color: 'bg-[#009B3A]' },
-  { id: 'compras', label: 'Compras', icon: ShoppingBag, color: 'bg-yellow-500' },
-  { id: 'bancos', label: 'Bancos', icon: Landmark, color: 'bg-[#002776]' },
-  { id: 'feiras', label: 'Feiras', icon: Store, color: 'bg-emerald-700' },
+  { id: 'todos', label: 'Todos', icon: LayoutGrid, color: 'bg-[#004BB4]' },
+  { id: 'saude', label: 'Saúde', icon: HeartPulse, color: 'bg-[#0F2C59]' },
+  { id: 'lazer', label: 'Lazer', icon: Palmtree, color: 'bg-[#004BB4]' },
+  { id: 'compras', label: 'Compras', icon: ShoppingBag, color: 'bg-[#FFB703]' },
+  { id: 'bancos', label: 'Bancos', icon: Landmark, color: 'bg-[#0F2C59]' },
+  { id: 'feiras', label: 'Feiras', icon: Store, color: 'bg-indigo-600' },
   { id: 'gastronomia', label: 'Comer', icon: Coffee, color: 'bg-amber-600' },
 ];
 
@@ -119,19 +119,19 @@ const LOCAL_PLACES = [
 // --- Components ---
 const Logo = ({ className = "w-8 h-8" }: { className?: string }) => (
   <svg viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-    <path d="M256 460V180" stroke="#009B3A" strokeWidth="44" strokeLinecap="round"/>
-    <path d="M256 380L120 280" stroke="#009B3A" strokeWidth="44" strokeLinecap="round"/>
-    <path d="M256 380L392 280" stroke="#009B3A" strokeWidth="44" strokeLinecap="round"/>
-    <circle cx="256" cy="150" r="110" fill="#FEE101"/>
-    <circle cx="90" cy="300" r="95" fill="#002776"/>
-    <circle cx="422" cy="300" r="95" fill="#009B3A"/>
+    <path d="M256 460V180" stroke="#004BB4" strokeWidth="44" strokeLinecap="round"/>
+    <path d="M256 380L120 280" stroke="#004BB4" strokeWidth="44" strokeLinecap="round"/>
+    <path d="M256 380L392 280" stroke="#004BB4" strokeWidth="44" strokeLinecap="round"/>
+    <circle cx="256" cy="150" r="110" fill="#FFB703"/>
+    <circle cx="90" cy="300" r="95" fill="#0F2C59"/>
+    <circle cx="422" cy="300" r="95" fill="#004BB4"/>
   </svg>
 );
 
 const Header = ({ title }: { title: string, onBack?: () => void }) => (
-  <div className="flex items-center gap-3 py-3 border-b border-[#009B3A]/10 mb-5 bg-[#009B3A]/5 p-3.5 rounded-2xl">
-    <div className="w-2.5 h-6 bg-[#009B3A] rounded-full"></div>
-    <h2 className="text-lg font-black text-[#002776] tracking-tight uppercase">{title}</h2>
+  <div className="flex items-center gap-3 py-3 border-b border-[#004BB4]/10 mb-5 bg-[#004BB4]/5 p-3.5 rounded-2xl">
+    <div className="w-2.5 h-6 bg-[#004BB4] rounded-full"></div>
+    <h2 className="text-lg font-black text-[#0F2C59] tracking-tight uppercase">{title}</h2>
   </div>
 );
 
@@ -143,12 +143,12 @@ const Card = ({ title, icon: Icon, color, onClick }: { title: string, icon: any,
     className="w-full p-5 flex items-center justify-between rounded-2xl bg-white shadow-sm border border-gray-100 group transition-all hover:shadow-md h-full text-left"
   >
     <div className="flex items-center gap-4">
-      <div className={`p-3 rounded-xl ${color} shadow-sm group-hover:shadow-emerald-200 transition-all flex-shrink-0`}>
+      <div className={`p-3 rounded-xl ${color} shadow-sm group-hover:shadow-blue-200 transition-all flex-shrink-0`}>
         <Icon className="w-6 h-6 text-white" />
       </div>
       <span className="text-lg font-semibold text-gray-700 leading-tight">{title}</span>
     </div>
-    <ChevronRight className="w-5 h-5 text-gray-300 group-hover:text-[#002776] transition-colors flex-shrink-0" />
+    <ChevronRight className="w-5 h-5 text-gray-300 group-hover:text-[#004BB4] transition-colors flex-shrink-0" />
   </motion.button>
 );
 
@@ -159,15 +159,15 @@ const LocalSectionItem: React.FC<{ title: string, desc?: string, icon: any, href
     href={href} 
     target="_blank" 
     rel="noopener noreferrer"
-    className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex gap-4 hover:border-[#009B3A] transition-all group active:scale-[0.98] h-full"
+    className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex gap-4 hover:border-[#004BB4] transition-all group active:scale-[0.98] h-full"
   >
-    <div className={`w-10 h-10 ${color || 'bg-[#009B3A]/10'} rounded-xl flex-shrink-0 flex items-center justify-center font-black transition-colors`}>
-      <Icon className={`w-5 h-5 ${color ? 'text-white' : 'text-[#009B3A]'}`} />
+    <div className={`w-10 h-10 ${color || 'bg-[#004BB4]/10'} rounded-xl flex-shrink-0 flex items-center justify-center font-black transition-colors`}>
+      <Icon className={`w-5 h-5 ${color ? 'text-white' : 'text-[#004BB4]'}`} />
     </div>
     <div className="flex-grow">
       <div className="flex justify-between items-center mb-1">
         <h4 className="font-bold text-gray-800 text-sm tracking-tight">{title}</h4>
-        <ExternalLink className="w-3 h-3 text-gray-300 group-hover:text-[#002776]" />
+        <ExternalLink className="w-3 h-3 text-gray-300 group-hover:text-[#004BB4]" />
       </div>
       {desc && <p className="text-gray-500 text-[11px] leading-relaxed">{desc}</p>}
     </div>
@@ -256,13 +256,13 @@ const App = () => {
               <motion.div 
                 initial={{ scale: 0.5, opacity: 0 }} 
                 animate={{ scale: 1, opacity: 1 }}
-                className="w-32 h-32 md:w-40 md:h-40 bg-white rounded-[2.5rem] md:rounded-[3rem] flex items-center justify-center shadow-2xl rotate-3 border-4 border-amber-500 overflow-hidden p-6"
+                className="w-32 h-32 md:w-40 md:h-40 bg-white rounded-[2.5rem] md:rounded-[3rem] flex items-center justify-center shadow-2xl rotate-3 border-4 border-[#FFB703] overflow-hidden p-6"
               >
                 <Logo className="w-full h-full" />
               </motion.div>
               <div className="space-y-2">
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 tracking-tighter italic">{STUDIO_INFO.name}</h1>
-                <p className="text-amber-600 font-bold uppercase tracking-[0.3em] text-xs md:text-sm">Welcome Home • Bueno</p>
+                <p className="text-[#004BB4] font-black uppercase tracking-[0.3em] text-xs md:text-sm">Welcome Home • Bueno</p>
               </div>
 
               {/* Search Bar */}
@@ -274,7 +274,7 @@ const App = () => {
                     placeholder="O que você está procurando?"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-12 pr-12 py-4 bg-white rounded-2xl shadow-sm border border-amber-100 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-300 transition-all text-gray-800 placeholder:text-gray-400"
+                    className="w-full pl-12 pr-12 py-4 bg-white rounded-2xl shadow-sm border border-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-300 transition-all text-gray-800 placeholder:text-gray-400"
                   />
                   {searchTerm && (
                     <button 
@@ -293,7 +293,7 @@ const App = () => {
                       initial={{ opacity: 0, y: 10, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      className="absolute top-full left-0 right-0 mt-2 bg-white rounded-3xl shadow-2xl border border-amber-50 overflow-hidden z-[100] max-h-[60vh] overflow-y-auto hide-scrollbar p-2"
+                      className="absolute top-full left-0 right-0 mt-2 bg-white rounded-3xl shadow-2xl border border-blue-50 overflow-hidden z-[100] max-h-[60vh] overflow-y-auto hide-scrollbar p-2"
                     >
                       {searchResults.length > 0 ? (
                         <div className="space-y-1">
@@ -306,9 +306,9 @@ const App = () => {
                                 else if (item.href) window.open(item.href, '_blank');
                                 setSearchTerm('');
                               }}
-                              className="w-full flex items-center gap-4 p-4 hover:bg-amber-50 rounded-2xl transition-all text-left group"
+                              className="w-full flex items-center gap-4 p-4 hover:bg-blue-50/50 rounded-2xl transition-all text-left group"
                             >
-                              <div className="p-3 bg-amber-100 rounded-xl text-amber-600 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                              <div className="p-3 bg-blue-100 text-[#004BB4] group-hover:bg-[#004BB4] group-hover:text-white transition-colors">
                                 <item.icon className="w-5 h-5" />
                               </div>
                               <div className="flex-grow min-w-0">
@@ -316,7 +316,7 @@ const App = () => {
                                 {item.desc && <p className="text-[10px] text-gray-500 truncate">{item.desc}</p>}
                                 {item.category && <span className="inline-block mt-1 px-2 py-0.5 bg-gray-100 text-[8px] font-black uppercase text-gray-500 rounded-full">{item.category}</span>}
                               </div>
-                              <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-amber-500" />
+                              <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-[#004BB4]" />
                             </button>
                           ))}
                         </div>
@@ -336,10 +336,10 @@ const App = () => {
             
             {!searchTerm && (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                <Card title="Nosso Studio" icon={Home} color="bg-amber-600" onClick={() => setActiveSection('studio')} />
-                <Card title="Check-in" icon={Key} color="bg-emerald-600" onClick={() => setActiveSection('checkin')} />
-                <Card title="Guia do Studio" icon={LayoutGrid} color="bg-amber-500" onClick={() => setActiveSection('casa')} />
-                <Card title="Guia Local" icon={MapPin} color="bg-sky-600" onClick={() => setActiveSection('local')} />
+                <Card title="Nosso Studio" icon={Home} color="bg-[#004BB4]" onClick={() => setActiveSection('studio')} />
+                <Card title="Check-in" icon={Key} color="bg-[#0F2C59]" onClick={() => setActiveSection('checkin')} />
+                <Card title="Guia do Studio" icon={LayoutGrid} color="bg-[#FFB703]" onClick={() => setActiveSection('casa')} />
+                <Card title="Guia Local" icon={MapPin} color="bg-indigo-600" onClick={() => setActiveSection('local')} />
                 <Card title="Checkout" icon={LogOut} color="bg-rose-600" onClick={() => setActiveSection('checkout')} />
                 <Card title="Emergências" icon={AlertCircle} color="bg-red-700" onClick={() => setActiveSection('emergencia')} />
               </div>
@@ -353,21 +353,21 @@ const App = () => {
             <div className="p-6 space-y-6 pb-24">
               <div className="flex gap-2">
                 {STUDIO_INFO.units.map(u => (
-                  <span key={u} className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-xs font-black uppercase tracking-widest">Unidade {u}</span>
+                  <span key={u} className="bg-blue-100 text-[#004BB4] px-3 py-1 rounded-full text-xs font-black uppercase tracking-widest">Unidade {u}</span>
                 ))}
               </div>
               <h2 className="text-2xl md:text-3xl font-bold text-gray-800 tracking-tight">Seu Refúgio Ideal: Conforto e Praticidade em um Local Privilegiado</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 prose prose-sm text-gray-600 leading-relaxed max-w-none">
                 <div className="space-y-4">
                   <p>Bem-vindo ao seu novo lar temporário! Nosso estúdio é a escolha perfeita para quem busca conforto, praticidade e uma localização privilegiada no <strong>Setor Bueno</strong>.</p>
-                  <div className="p-6 bg-amber-50 rounded-3xl border border-amber-100 space-y-3">
-                    <h4 className="font-bold text-amber-900 flex items-center gap-2"><MapPin className="w-4 h-4"/> Localização Imbatível</h4>
-                    <p className="text-xs">Situado em uma região vibrante e rica em comércio, você terá tudo o que precisa ao seu alcance. Estamos próximos ao Hiper Mercado Moreira, hospitais, clínicas e ao zoológico.</p>
+                  <div className="p-6 bg-blue-50/50 rounded-3xl border border-blue-100 space-y-3">
+                    <h4 className="font-bold text-blue-950 flex items-center gap-2"><MapPin className="w-4 h-4 text-[#004BB4]"/> Localização Imbatível</h4>
+                    <p className="text-xs text-gray-600">Situado em uma região vibrante e rica em comércio, você terá tudo o que precisa ao seu alcance. Estamos próximos ao Hiper Mercado Moreira, hospitais, clínicas e ao zoológico.</p>
                   </div>
                 </div>
                 <div className="space-y-4">
                   <div className="p-6 bg-white rounded-3xl border border-gray-100 shadow-sm space-y-3">
-                    <h4 className="font-bold text-gray-800 flex items-center gap-2"><Sparkles className="w-4 h-4 text-amber-500"/> Conforto e Funcionalidade</h4>
+                    <h4 className="font-bold text-gray-800 flex items-center gap-2"><Sparkles className="w-4 h-4 text-[#FFB703]"/> Conforto e Funcionalidade</h4>
                     <p className="text-xs">Acomoda até <strong>3 e 4 pessoas</strong>. Totalmente mobiliado com cama de casal e sofá-cama. Cozinha equipada com <strong>cooktop e geladeira</strong>, além de ar condicionado e Smart TV.</p>
                   </div>
                 </div>
@@ -380,28 +380,28 @@ const App = () => {
           <div className="animate-in fade-in slide-in-from-bottom-4 duration-300 max-w-4xl mx-auto">
             <Header title="Check-in" onBack={() => setActiveSection('home')} />
             <div className="p-6 space-y-8 pb-24">
-              <div className="p-6 bg-emerald-50 rounded-3xl border border-emerald-100 flex items-center gap-4">
-                <UserCheck className="w-12 h-12 text-emerald-500 flex-shrink-0" />
+              <div className="p-6 bg-blue-50/50 rounded-3xl border border-blue-100 flex items-center gap-4">
+                <UserCheck className="w-12 h-12 text-[#004BB4] flex-shrink-0" />
                 <div>
-                  <h3 className="text-emerald-900 font-bold text-lg md:text-xl">Seja bem-vindo(a)! 👋</h3>
-                  <p className="text-emerald-700 text-xs md:text-sm font-medium leading-relaxed">Siga as instruções abaixo para o seu primeiro acesso ao {STUDIO_INFO.name}. Atenção aos procedimentos de segurança. 🔒</p>
+                  <h3 className="text-[#0F2C59] font-bold text-lg md:text-xl">Seja bem-vindo(a)! 👋</h3>
+                  <p className="text-slate-600 text-xs md:text-sm font-medium leading-relaxed">Siga as instruções abaixo para o seu primeiro acesso ao {STUDIO_INFO.name}. Atenção aos procedimentos de segurança. 🔒</p>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <section className="bg-white p-6 rounded-3xl border border-amber-100 shadow-sm space-y-4">
+                <section className="bg-white p-6 rounded-3xl border border-blue-100 shadow-sm space-y-4">
                   <div className="flex items-center gap-3">
-                    <div className="bg-amber-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm shadow-md flex-shrink-0">I</div>
+                    <div className="bg-[#FFB703] text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm shadow-md flex-shrink-0">I</div>
                     <h4 className="font-bold text-gray-800 text-lg">Cofre de Chaves</h4>
                   </div>
-                  <div className="flex items-start gap-3 bg-amber-50/50 p-4 rounded-2xl border border-amber-100">
-                    <MapPin className="w-5 h-5 text-amber-600 mt-1 flex-shrink-0" />
+                  <div className="flex items-start gap-3 bg-blue-50/40 p-4 rounded-2xl border border-blue-100">
+                    <MapPin className="w-5 h-5 text-[#004BB4] mt-1 flex-shrink-0" />
                     <p className="text-sm text-gray-700 leading-relaxed">Localize o <strong>cofre (cadeado preto)</strong> no <strong>poste amarelo</strong> na calçada.</p>
                   </div>
-                  <div className="space-y-3 pl-4 border-l-2 border-amber-100">
-                    <div className="flex gap-3 bg-amber-50 p-3 rounded-xl border border-amber-200">
-                      <Lock className="w-4 h-4 text-amber-700 mt-0.5" />
-                      <p className="text-sm text-amber-900 font-bold">Senha: {STUDIO_INFO.keySafeCode}</p>
+                  <div className="space-y-3 pl-4 border-l-2 border-blue-100">
+                    <div className="flex gap-3 bg-blue-50/50 p-3 rounded-xl border border-blue-200">
+                      <Lock className="w-4 h-4 text-[#004BB4] mt-0.5" />
+                      <p className="text-sm text-blue-900 font-bold">Senha: {STUDIO_INFO.keySafeCode}</p>
                     </div>
                     <p className="text-xs text-gray-600">Pressione o botão de liberação esquerdo. Retire a chave e a tag. 🔑</p>
                     <div className="p-4 bg-rose-50 rounded-2xl border border-rose-100 flex items-start gap-3 mt-2">
@@ -411,9 +411,9 @@ const App = () => {
                   </div>
                 </section>
 
-                <section className="bg-white p-6 rounded-3xl border border-amber-100 shadow-sm space-y-4">
+                <section className="bg-white p-6 rounded-3xl border border-blue-100 shadow-sm space-y-4">
                   <div className="flex items-center gap-3">
-                    <div className="bg-amber-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm shadow-md flex-shrink-0">II</div>
+                    <div className="bg-[#FFB703] text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm shadow-md flex-shrink-0">II</div>
                     <h4 className="font-bold text-gray-800 text-lg">Acesso e Elevador</h4>
                   </div>
                   <div className="space-y-4">
@@ -425,7 +425,7 @@ const App = () => {
                       </div>
                     </div>
                     <div className="flex items-start gap-4">
-                      <div className="bg-amber-100 p-2 rounded-lg text-amber-700 flex-shrink-0"><Building2 className="w-5 h-5" /></div>
+                      <div className="bg-blue-100 p-2 rounded-lg text-blue-800 flex-shrink-0"><Building2 className="w-5 h-5" /></div>
                       <div className="space-y-1">
                         <p className="font-bold text-gray-800 text-sm">Elevador</p>
                         <p className="text-xs text-gray-500 font-bold">Andar 1. ⬆️</p>
@@ -435,17 +435,17 @@ const App = () => {
                 </section>
               </div>
 
-              <section className="bg-white p-6 rounded-3xl border border-amber-100 shadow-sm space-y-4">
+              <section className="bg-white p-6 rounded-3xl border border-blue-100 shadow-sm space-y-4">
                 <div className="flex items-center gap-3">
-                  <div className="bg-amber-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm shadow-md flex-shrink-0">III</div>
+                  <div className="bg-[#FFB703] text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm shadow-md flex-shrink-0">III</div>
                   <h4 className="font-bold text-gray-800 text-lg">Unidade e Fechadura</h4>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="flex items-start gap-3 bg-amber-50 p-4 rounded-2xl border border-amber-100">
-                    <MapPin className="w-5 h-5 text-amber-600 mt-1 flex-shrink-0" />
+                  <div className="flex items-start gap-3 bg-blue-50/50 p-4 rounded-2xl border border-blue-100">
+                    <MapPin className="w-5 h-5 text-[#004BB4] mt-1 flex-shrink-0" />
                     <div>
-                      <p className="text-sm font-bold text-amber-900">Localização</p>
-                      <p className="text-xs text-amber-800">Saindo do elevador, esquerda até o final do corredor.</p>
+                      <p className="text-sm font-bold text-blue-900">Localização</p>
+                      <p className="text-xs text-blue-800">Saindo do elevador, esquerda até o final do corredor.</p>
                     </div>
                   </div>
                   <div className="bg-gray-900 text-white p-6 rounded-3xl shadow-2xl relative overflow-hidden group">
@@ -453,9 +453,9 @@ const App = () => {
                       <Lock className="w-20 h-20" />
                     </div>
                     <div className="space-y-4 relative z-10">
-                      <p className="text-[10px] text-amber-400 font-black uppercase tracking-[0.3em]">Senha Digital</p>
+                      <p className="text-[10px] text-[#FFB703] font-black uppercase tracking-[0.3em]">Senha Digital</p>
                       <p className="text-xl font-mono tracking-tighter">
-                        <span className="text-amber-500">*</span> ddd + prefixo <span className="text-amber-500">#</span>
+                        <span className="text-[#FFB703]">*</span> ddd + prefixo <span className="text-[#FFB703]">#</span>
                       </p>
                       <p className="text-[10px] text-gray-400">Ex: Celular 62 98545-1980 &rarr; <strong>*6298545#</strong></p>
                     </div>
@@ -466,7 +466,7 @@ const App = () => {
               <footer className="text-center py-8 space-y-4">
                 <p className="text-gray-500 text-sm font-medium leading-relaxed italic px-6">"Agradecemos a colaboração e desejamos uma excelente estadia!" 😊</p>
                 <div className="space-y-1">
-                   <p className="text-[10px] text-amber-600 uppercase font-black tracking-widest">Atenciosamente,</p>
+                   <p className="text-[10px] text-[#004BB4] uppercase font-black tracking-widest">Atenciosamente,</p>
                    <p className="text-lg font-black text-gray-900 tracking-tight">Wellington Rodovalho</p>
                 </div>
               </footer>
@@ -483,7 +483,7 @@ const App = () => {
                 <div className="flex flex-col items-center gap-6 py-4 w-full lg:w-1/3">
                   <div className="text-center space-y-1">
                     <h2 className="text-3xl font-bold tracking-tighter italic text-gray-800">{STUDIO_INFO.name}</h2>
-                    <div className="w-16 h-0.5 bg-amber-200 mx-auto"></div>
+                    <div className="w-16 h-0.5 bg-[#FFB703] mx-auto"></div>
                   </div>
                   <div className="bg-black text-white p-3 rounded-full flex items-center justify-center gap-3 px-8 shadow-xl">
                     <Wifi className="w-8 h-8" />
@@ -494,7 +494,7 @@ const App = () => {
                       <Paperclip className="w-10 h-10 text-gray-600 drop-shadow-md" />
                     </div>
                     <div className="bg-[#f2eadc] p-8 rounded-sm shadow-[5px_5px_15px_rgba(0,0,0,0.1)] border-b-[3px] border-r-[3px] border-[#e0d3be] flex flex-col items-center gap-6 relative overflow-hidden">
-                      <div className="absolute bottom-0 left-0 right-0 h-2 flex">
+                       <div className="absolute bottom-0 left-0 right-0 h-2 flex">
                         {[...Array(20)].map((_, i) => (
                           <div key={i} className="flex-1 bg-[#fdfaf5] h-full rounded-t-full -mt-1"></div>
                         ))}
@@ -529,7 +529,7 @@ const App = () => {
                             navigator.clipboard.writeText(STUDIO_INFO.wifiPass); 
                             alert("Senha copiada! Agora basta selecionar a rede e colar a senha.");
                           }} 
-                          className="w-full bg-white py-3 rounded-xl shadow-sm border border-amber-100 flex items-center justify-center gap-2 text-xs font-black uppercase text-amber-700 active:scale-95 transition-all hover:bg-amber-50"
+                          className="w-full bg-white py-3 rounded-xl shadow-sm border border-blue-100 flex items-center justify-center gap-2 text-xs font-black uppercase text-[#004BB4] active:scale-95 transition-all hover:bg-blue-50/50"
                         >
                           <Clipboard className="w-4 h-4"/> Copiar Senha
                         </button>
@@ -539,7 +539,7 @@ const App = () => {
                           download="wifi-qrcode.png"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="w-full bg-amber-500 py-3 rounded-xl shadow-md flex items-center justify-center gap-2 text-xs font-black uppercase text-white active:scale-95 transition-all hover:bg-amber-600"
+                          className="w-full bg-[#FFB703] py-3 rounded-xl shadow-md flex items-center justify-center gap-2 text-xs font-black uppercase text-white active:scale-95 transition-all hover:bg-[#D97706]"
                         >
                           <QrCode className="w-4 h-4"/> Ver QR Code Ampliado
                         </a>
@@ -549,22 +549,22 @@ const App = () => {
                 </div>
 
                 <div className="flex-grow space-y-8 w-full lg:w-2/3">
-                  <section className="bg-white p-6 rounded-3xl border border-amber-100 shadow-sm space-y-4">
+                  <section className="bg-white p-6 rounded-3xl border border-blue-100 shadow-sm space-y-4">
                     <div className="flex items-center gap-3">
-                      <Sparkles className="w-6 h-6 text-emerald-500" />
+                      <Sparkles className="w-6 h-6 text-[#004BB4]" />
                       <h4 className="font-bold text-gray-800 text-lg">🧹 Limpeza</h4>
                     </div>
                     <p className="text-xs text-gray-600 leading-relaxed">
                       Entregue limpo e higienizado com enxoval proporcional aos hóspedes.
                     </p>
-                    <div className="bg-emerald-50 p-4 rounded-2xl border border-emerald-100">
-                      <p className="text-xs text-emerald-800 font-bold">
+                    <div className="bg-blue-50/50 p-4 rounded-2xl border border-blue-100">
+                      <p className="text-xs text-blue-800 font-bold">
                         Limpeza extra (com troca de enxoval): <strong>R$ 120,00</strong>.
                       </p>
                     </div>
                   </section>
 
-                  <section className="bg-white p-6 rounded-3xl border border-amber-100 shadow-sm space-y-4">
+                  <section className="bg-white p-6 rounded-3xl border border-blue-100 shadow-sm space-y-4">
                     <div className="flex items-center gap-3">
                       <ScrollText className="w-6 h-6 text-sky-600" />
                       <h4 className="font-bold text-gray-800 text-lg">📋 Condomínio</h4>
@@ -600,48 +600,48 @@ const App = () => {
                   </div>
                 </div>
                 <div className="bg-gray-900 text-white p-6 rounded-3xl shadow-lg flex items-start gap-4">
-                  <Mail className="w-6 h-6 text-amber-400 flex-shrink-0" />
+                  <Mail className="w-6 h-6 text-[#FFB703] flex-shrink-0" />
                   <div>
-                    <h4 className="font-bold text-amber-400 text-sm">✔ TAG</h4>
+                    <h4 className="font-bold text-[#FFB703] text-sm">✔ TAG</h4>
                     <p className="text-[10px] text-gray-300 mt-1 leading-tight">Deixar dentro do apartamento na bancada de pedra.</p>
                   </div>
                 </div>
                 <motion.button 
                   whileTap={{ scale: 0.98 }}
                   onClick={() => setShowTrashGuide(true)}
-                  className="bg-emerald-50/40 p-6 rounded-3xl border border-[#009B3A]/20 flex items-start gap-4 shadow-sm text-left group hover:border-[#009B3A] transition-all"
+                  className="bg-blue-50/40 p-6 rounded-3xl border border-[#004BB4]/20 flex items-start gap-4 shadow-sm text-left group hover:border-[#004BB4] transition-all"
                 >
-                  <Trash2 className="w-6 h-6 text-[#009B3A] flex-shrink-0 group-hover:rotate-12 transition-transform" />
+                  <Trash2 className="w-6 h-6 text-[#004BB4] flex-shrink-0 group-hover:rotate-12 transition-transform" />
                   <div>
-                    <h4 className="font-bold text-[#002776] text-sm">🗑 Lixo & Reciclagem</h4>
-                    <p className="text-[10px] text-gray-500 mt-1 leading-tight font-bold text-[#009B3A]">Ver guia completo de descarte &rarr;</p>
+                    <h4 className="font-bold text-[#0F2C59] text-sm">🗑 Lixo & Reciclagem</h4>
+                    <p className="text-[10px] text-gray-500 mt-1 leading-tight font-bold text-[#004BB4]">Ver guia completo de descarte &rarr;</p>
                   </div>
                 </motion.button>
                 <motion.button 
                   whileTap={{ scale: 0.98 }}
                   onClick={() => setShowCoffeeTutorial(true)}
-                  className="bg-amber-50 p-6 rounded-3xl border border-amber-200 flex items-start gap-4 shadow-sm text-left group"
+                  className="bg-blue-50 p-6 rounded-3xl border border-blue-200 flex items-start gap-4 shadow-sm text-left group"
                 >
-                  <Coffee className="w-6 h-6 text-amber-600 flex-shrink-0 group-hover:rotate-12 transition-transform" />
+                  <Coffee className="w-6 h-6 text-[#004BB4] flex-shrink-0 group-hover:rotate-12 transition-transform" />
                   <div>
-                    <h4 className="font-bold text-amber-900 text-sm">☕ Cafeteira</h4>
-                    <p className="text-[10px] text-amber-700 mt-1 leading-tight font-bold">Ver guia passo a passo Tres Corações &rarr;</p>
+                    <h4 className="font-bold text-blue-900 text-sm">☕ Cafeteira</h4>
+                    <p className="text-[10px] text-blue-700 mt-1 leading-tight font-bold">Ver guia passo a passo Tres Corações &rarr;</p>
                   </div>
                 </motion.button>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm space-y-2 flex items-center gap-3">
-                  <Tv className="w-8 h-8 text-amber-500 flex-shrink-0"/>
+                  <Tv className="w-8 h-8 text-[#FFB703] flex-shrink-0"/>
                   <div><h5 className="font-bold text-xs uppercase">Controles</h5><p className="text-[10px] text-gray-500">Na cabeceira ou bancada.</p></div>
                 </div>
                 <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm space-y-2 flex items-center gap-3">
-                  <Utensils className="w-8 h-8 text-emerald-500 flex-shrink-0"/>
+                  <Utensils className="w-8 h-8 text-[#004BB4] flex-shrink-0"/>
                   <div><h5 className="font-bold text-xs uppercase">Cozinha</h5><p className="text-[10px] text-gray-500">Favor lavar e guardar louça.</p></div>
                 </div>
                 <div className="bg-rose-50 p-6 rounded-3xl border border-rose-100 shadow-sm flex items-center gap-3">
                   <Flame className="w-8 h-8 text-rose-500 flex-shrink-0"/>
-                  <div><h5 className="font-bold text-xs uppercase">Segurança</h5><p className="text-[10px] text-rose-800">Use escadas em caso de fogo.</p></div>
+                  <div><h5 className="font-bold text-xs uppercase">Segurança</h5><p className="text-[10px] text-rose-800">Use escadas in caso de fogo.</p></div>
                 </div>
               </div>
             </div>
@@ -651,11 +651,11 @@ const App = () => {
         return (
           <div className="animate-in fade-in slide-in-from-bottom-4 duration-300 max-w-5xl mx-auto">
             <Header title="Guia Local" onBack={() => setActiveSection('home')} />
-            <div className="p-6 bg-white border-b border-amber-50 sticky top-[72px] z-30">
+            <div className="p-6 bg-white border-b border-blue-50 sticky top-[72px] z-30">
               <div className="grid grid-cols-4 md:grid-cols-7 gap-2 overflow-x-auto pb-2 no-scrollbar">
                 {CATEGORIES.map((cat) => (
-                  <button key={cat.id} onClick={() => setActiveCategory(cat.id)} className={`flex flex-col items-center gap-1.5 p-3 rounded-2xl transition-all min-w-[70px] ${cat.color} ${activeCategory === cat.id ? 'text-white shadow-lg scale-105 z-10' : 'bg-amber-50 text-gray-500 opacity-60'}`}>
-                    <cat.icon className={`w-5 h-5 ${activeCategory === cat.id ? 'text-white' : 'text-amber-600'}`} />
+                  <button key={cat.id} onClick={() => setActiveCategory(cat.id)} className={`flex flex-col items-center gap-1.5 p-3 rounded-2xl transition-all min-w-[70px] ${cat.color} ${activeCategory === cat.id ? 'text-white shadow-lg scale-105 z-10' : 'bg-blue-50/50 text-gray-500 opacity-60'}`}>
+                    <cat.icon className={`w-5 h-5 ${activeCategory === cat.id ? 'text-white' : 'text-[#004BB4]'}`} />
                     <span className="text-[10px] font-bold uppercase text-center truncate w-full">{cat.label}</span>
                   </button>
                 ))}
@@ -684,8 +684,8 @@ const App = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                <div className="bg-white p-6 rounded-3xl border border-amber-100 shadow-sm flex items-start gap-4">
-                  <div className="bg-amber-500 p-3 rounded-2xl text-white shadow-md flex-shrink-0">
+                <div className="bg-white p-6 rounded-3xl border border-blue-100 shadow-sm flex items-start gap-4">
+                  <div className="bg-[#FFB703] p-3 rounded-2xl text-white shadow-md flex-shrink-0">
                     <Clock className="w-6 h-6" />
                   </div>
                   <div>
@@ -695,7 +695,7 @@ const App = () => {
                     </p>
                   </div>
                 </div>
-                <div className="bg-white p-6 rounded-3xl border border-amber-100 shadow-sm flex items-start gap-4">
+                <div className="bg-white p-6 rounded-3xl border border-blue-100 shadow-sm flex items-start gap-4">
                   <div className="bg-sky-500 p-3 rounded-2xl text-white shadow-md flex-shrink-0">
                     <Bath className="w-6 h-6" />
                   </div>
@@ -709,21 +709,21 @@ const App = () => {
                 <motion.button
                   whileTap={{ scale: 0.98 }}
                   onClick={() => setShowTrashGuide(true)}
-                  className="bg-white p-6 rounded-3xl border border-emerald-100 hover:border-[#009B3A] shadow-sm flex items-start gap-4 text-left group transition-all w-full"
+                  className="bg-white p-6 rounded-3xl border border-blue-100 hover:border-[#004BB4] shadow-sm flex items-start gap-4 text-left group transition-all w-full"
                 >
-                  <div className="bg-[#009B3A] p-3 rounded-2xl text-white shadow-md flex-shrink-0 group-hover:rotate-6 transition-transform">
-                    <Trash2 className="w-6 h-6 text-[#FEE101]" />
+                  <div className="bg-[#004BB4] p-3 rounded-2xl text-white shadow-md flex-shrink-0 group-hover:rotate-6 transition-transform">
+                    <Trash2 className="w-6 h-6 text-[#FFB703]" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-[#002776] text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
-                      🗑️ Lixo & Reciclagem <span className="text-[10px] text-[#009B3A] lowercase font-bold font-sans">Ver Guia</span>
+                    <h4 className="font-bold text-[#0F2C59] text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                      🗑️ Lixo & Reciclagem <span className="text-[10px] text-[#004BB4] lowercase font-bold font-sans">Ver Guia</span>
                     </h4>
                     <p className="text-sm text-gray-600 font-medium leading-relaxed">
                       Deposite o lixo nas lixeiras localizadas no térreo (atrás da recepção). Clique para ver as instruções de reciclagem.
                     </p>
                   </div>
                 </motion.button>
-                <div className="bg-white p-6 rounded-3xl border border-amber-100 shadow-sm flex items-start gap-4">
+                <div className="bg-white p-6 rounded-3xl border border-blue-100 shadow-sm flex items-start gap-4">
                   <div className="bg-orange-500 p-3 rounded-2xl text-white shadow-md flex-shrink-0">
                     <Zap className="w-6 h-6" />
                   </div>
@@ -734,8 +734,8 @@ const App = () => {
                     </p>
                   </div>
                 </div>
-                <div className="bg-white p-6 rounded-3xl border border-amber-100 shadow-sm flex items-start gap-4">
-                  <div className="bg-indigo-500 p-3 rounded-2xl text-white shadow-md flex-shrink-0">
+                <div className="bg-white p-6 rounded-3xl border border-blue-100 shadow-sm flex items-start gap-4">
+                  <div className="bg-[#004BB4] p-3 rounded-2xl text-white shadow-md flex-shrink-0">
                     <DoorClosed className="w-6 h-6" />
                   </div>
                   <div>
@@ -745,7 +745,7 @@ const App = () => {
                     </p>
                   </div>
                 </div>
-                <div className="bg-white p-6 rounded-3xl border border-amber-100 shadow-sm flex items-start gap-4">
+                <div className="bg-white p-6 rounded-3xl border border-blue-100 shadow-sm flex items-start gap-4">
                   <div className="bg-rose-500 p-3 rounded-2xl text-white shadow-md flex-shrink-0">
                     <Search className="w-6 h-6" />
                   </div>
@@ -763,15 +763,15 @@ const App = () => {
                   <Key className="w-32 h-32" />
                 </div>
                 <div className="relative z-10 space-y-4">
-                  <div className="flex items-center gap-3 text-amber-400">
+                  <div className="flex items-center gap-3 text-[#FFB703]">
                     <Mail className="w-8 h-8" />
                     <h4 className="text-xl font-black uppercase tracking-tight italic">🔑 Devolução da TAG</h4>
                   </div>
                   <p className="text-gray-300 font-medium leading-relaxed">
                     Antes de sair, deixe a TAG dentro do apartamento <strong>sobre a bancada de pedra</strong>.
                   </p>
-                  <div className="bg-white/5 p-4 rounded-2xl border border-white/10 border-l-4 border-amber-500 mt-4">
-                    <p className="text-xs md:text-sm text-amber-100 leading-relaxed font-bold">
+                  <div className="bg-white/5 p-4 rounded-2xl border border-white/10 border-l-4 border-[#FFB703] mt-4">
+                    <p className="text-xs md:text-sm text-yellow-100 leading-relaxed font-bold">
                       Certifique-se de que a porta esteja devidamente trancada ao sair.
                     </p>
                   </div>
@@ -827,10 +827,10 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f4faf4] flex flex-col relative antialiased selection:bg-yellow-200 selection:text-[#002776] text-gray-900">
+    <div className="min-h-screen bg-[#f4f7fc] flex flex-col relative antialiased selection:bg-[#FFB703]/30 selection:text-[#0F2C59] text-gray-900">
       
-      {/* Dynamic Header Clima da Copa */}
-      <header className="sticky top-0 z-50 w-full bg-[#009B3A] text-white py-3 px-4 shadow-md border-b-[5px] border-[#FEE101]">
+      {/* Dynamic Header */}
+      <header className="sticky top-0 z-50 w-full bg-[#004BB4] text-white py-3 px-4 shadow-md border-b-[5px] border-[#FFB703]">
         <div className="max-w-5xl mx-auto flex items-center justify-between">
           <button 
             onClick={() => { setActiveSection('home'); setSearchTerm(''); }} 
@@ -842,22 +842,22 @@ const App = () => {
             </div>
             <div>
               <h1 className="text-base sm:text-lg font-black tracking-tighter uppercase flex items-center gap-1.5 leading-none">
-                {STUDIO_INFO.name} <span className="text-[#FEE101] text-xs">🇧🇷 Copa</span>
+                {STUDIO_INFO.name}
               </h1>
               <p className="text-[9px] text-yellow-100 font-bold uppercase tracking-widest leading-none mt-0.5">Bueno • Goiânia</p>
             </div>
           </button>
           
           <div className="flex items-center gap-2">
-            <span className="hidden xs:inline-block px-2.5 py-1 bg-[#002776] text-white border border-white/20 text-[9px] font-black rounded-lg uppercase tracking-wider shadow-sm animate-pulse">
-              Rumo ao Hexa! ⚽️🏆
+            <span className="hidden xs:inline-block px-2.5 py-1 bg-[#0F2C59] text-[#FFB703] border border-white/20 text-[9px] font-black rounded-lg uppercase tracking-wider shadow-sm">
+              Guia do Hóspede 🔑
             </span>
           </div>
         </div>
       </header>
 
       {/* Persistent & Compact Navigation Tabs - Always visible & fixed at the top */}
-      <nav className="sticky top-[69px] z-40 w-full bg-white/95 backdrop-blur-md border-b border-[#009B3A]/20 shadow-sm py-2 px-3">
+      <nav className="sticky top-[69px] z-40 w-full bg-white/95 backdrop-blur-md border-b border-[#004BB4]/20 shadow-sm py-2 px-3">
         <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-3 md:grid-cols-6 gap-1 md:gap-2">
             {NAVIGATION_TABS.map((tab) => {
@@ -871,11 +871,11 @@ const App = () => {
                   }}
                   className={`flex flex-col sm:flex-row items-center justify-center gap-1 md:gap-1.5 p-1.5 md:p-2.5 rounded-xl border transition-all active:scale-95 ${
                     isActive 
-                      ? 'bg-[#009B3A] text-white border-[#FEE101] shadow-md scale-[1.01]' 
-                      : 'bg-white text-gray-700 hover:bg-emerald-50 border-gray-100'
+                      ? 'bg-[#004BB4] text-white border-[#FFB703] shadow-md scale-[1.01]' 
+                      : 'bg-white text-gray-700 hover:bg-blue-50/50 border-gray-100'
                   }`}
                 >
-                  <tab.icon className={`w-4 h-4 ${isActive ? 'text-[#FEE101]' : 'text-[#009B3A]'}`} strokeWidth={isActive ? 2.5 : 1.8} />
+                  <tab.icon className={`w-4 h-4 ${isActive ? 'text-[#FFB703]' : 'text-[#004BB4]'}`} strokeWidth={isActive ? 2.5 : 1.8} />
                   <span className={`text-[10px] md:text-xs font-bold leading-none truncate ${isActive ? 'text-white font-black' : 'text-gray-700'}`}>
                     {tab.title}
                   </span>
@@ -903,16 +903,16 @@ const App = () => {
               initial={{ scale: 0.9, y: 20 }} 
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="bg-white w-full max-w-2xl rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh] pointer-events-auto border-4 border-[#009B3A]"
+              className="bg-white w-full max-w-2xl rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh] pointer-events-auto border-4 border-[#004BB4]"
             >
-              <div className="p-6 border-b flex justify-between items-center bg-[#009B3A]/5">
-                <div className="flex items-center gap-3 text-[#009B3A]">
-                  <div className="p-2 bg-[#009B3A] rounded-xl text-white">
+              <div className="p-6 border-b flex justify-between items-center bg-[#004BB4]/5">
+                <div className="flex items-center gap-3 text-[#004BB4]">
+                  <div className="p-2 bg-[#004BB4] rounded-xl text-white">
                     <Coffee className="w-6 h-6" />
                   </div>
                   <h3 className="text-xl font-bold tracking-tight uppercase">Tutorial Cafeteira Tres</h3>
                 </div>
-                <button onClick={() => setShowCoffeeTutorial(false)} className="p-2 hover:bg-[#009B3A]/10 rounded-full text-[#009B3A] transition-colors">
+                <button onClick={() => setShowCoffeeTutorial(false)} className="p-2 hover:bg-[#004BB4]/10 rounded-full text-[#004BB4] transition-colors">
                   <X className="w-6 h-6" />
                 </button>
               </div>
@@ -920,18 +920,18 @@ const App = () => {
               <div className="p-6 overflow-y-auto space-y-8 hide-scrollbar">
                 <div className="grid grid-cols-1 gap-8">
                   {[
-                    { title: "Energia", desc: "Conecte o cabo na tomada. Atenção: A rede do prédio é 220V.", icon: Zap, color: "bg-blue-600", light: "bg-blue-50", text: "text-blue-600" },
-                    { title: "Água", desc: "Encha o reservatório traseiro com água filtrada até o nível indicado.", icon: Droplets, color: "bg-sky-500", light: "bg-sky-50", text: "text-sky-500" },
-                    { title: "Cápsulas", desc: "Escolha sua cápsula favorita no suporte que deixamos para você.", icon: LayoutGrid, color: "bg-orange-600", light: "bg-orange-50", text: "text-orange-600" },
-                    { title: "Preparar", desc: "Levante a alavanca superior para abrir o compartimento de cápsulas.", icon: ChevronUp, color: "bg-gray-700", light: "bg-gray-50", text: "text-gray-700" },
-                    { title: "Inserir", desc: "Coloque a cápsula na gaveta interna conforme o encaixe.", icon: Download, color: "bg-amber-800", light: "bg-amber-50", text: "text-amber-800" },
-                    { title: "Iniciar", desc: "Feche a alavanca e pressione o botão correspondente à cor da cápsula.", icon: Play, color: "bg-emerald-600", light: "bg-emerald-50", text: "text-emerald-600" },
-                    { title: "Pronto!", desc: "Aguarde o preparo. A luz ficará fixa quando terminar. Bom café!", icon: Coffee, color: "bg-rose-600", light: "bg-rose-50", text: "text-rose-600" }
+                    { title: "Energia", desc: "Conecte o cabo na tomada. Atenção: A rede do prédio é 220V.", icon: Zap, bg: "bg-[#0F2C59]", light: "bg-[#0F2C59]/5", border: "border-[#0F2C59]/20", text: "text-[#0F2C59]" },
+                    { title: "Água", desc: "Encha o reservatório traseiro com água filtrada até o nível indicado.", icon: Droplets, bg: "bg-[#004BB4]", light: "bg-[#004BB4]/5", border: "border-[#004BB4]/20", text: "text-[#004BB4]" },
+                    { title: "Cápsulas", desc: "Escolha sua cápsula favorita no suporte que deixamos para você.", icon: LayoutGrid, bg: "bg-[#FFB703]", light: "bg-[#FFB703]/5", border: "border-[#FFB703]/20", text: "text-[#FFB703]" },
+                    { title: "Preparar", desc: "Levante a alavanca superior para abrir o compartimento de cápsulas.", icon: ChevronUp, bg: "bg-[#D97706]", light: "bg-[#D97706]/5", border: "border-[#D97706]/20", text: "text-[#D97706]" },
+                    { title: "Inserir", desc: "Coloque a cápsula na gaveta interna conforme o encaixe.", icon: Download, bg: "bg-[#0D9488]", light: "bg-[#0D9488]/5", border: "border-[#0D9488]/20", text: "text-[#0D9488]" },
+                    { title: "Iniciar", desc: "Feche a alavanca e pressione o botão correspondente à cor da cápsula.", icon: Play, bg: "bg-[#475569]", light: "bg-[#475569]/5", border: "border-[#475569]/20", text: "text-[#475569]" },
+                    { title: "Pronto!", desc: "Aguarde o preparo. A luz ficará fixa quando terminar. Bom café!", icon: Coffee, bg: "bg-[#B45309]", light: "bg-[#B45309]/5", border: "border-[#B45309]/20", text: "text-[#B45309]" }
                   ].map((step, idx) => (
                     <div key={idx} className="flex flex-col md:flex-row gap-6 items-center pb-8 border-b border-gray-100 last:border-0 last:pb-0">
-                      <div className={`w-full md:w-4/12 aspect-square rounded-3xl overflow-hidden shadow-lg border-4 flex-shrink-0 flex items-center justify-center relative ${step.light} ${step.color.replace('bg-', 'border-').replace('600', '200').replace('500', '200').replace('800', '200').replace('700', '200')}`}>
+                      <div className={`w-full md:w-4/12 aspect-square rounded-3xl overflow-hidden shadow-lg border-4 flex-shrink-0 flex items-center justify-center relative ${step.light} ${step.border}`}>
                         <step.icon className={`w-16 h-16 ${step.text}`} strokeWidth={1.5} />
-                        <div className={`absolute top-4 left-4 w-8 h-8 ${step.color} text-white rounded-full flex items-center justify-center font-bold shadow-md text-sm`}>
+                        <div className={`absolute top-4 left-4 w-8 h-8 ${step.bg} text-white rounded-full flex items-center justify-center font-bold shadow-md text-sm`}>
                           {idx + 1}
                         </div>
                       </div>
@@ -949,17 +949,17 @@ const App = () => {
                     <motion.div 
                       animate={{ scale: [1, 1.1, 1] }} 
                       transition={{ duration: 2, repeat: Infinity }}
-                      className="w-24 h-24 bg-emerald-50 rounded-full flex items-center justify-center border-2 border-[#009B3A]/20"
+                      className="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center border-2 border-[#004BB4]/20"
                     >
-                      <Coffee className="w-12 h-12 text-[#009B3A]" strokeWidth={1.5} />
+                      <Coffee className="w-12 h-12 text-[#004BB4]" strokeWidth={1.5} />
                     </motion.div>
-                    <div className="absolute -top-1 -right-1 w-6 h-6 bg-[#009B3A] rounded-full flex items-center justify-center shadow-lg">
-                      <Heart className="w-3 h-3 text-[#FEE101] fill-current" />
+                    <div className="absolute -top-1 -right-1 w-6 h-6 bg-[#004BB4] rounded-full flex items-center justify-center shadow-lg">
+                      <Heart className="w-3 h-3 text-[#FFB703] fill-current" />
                     </div>
                   </div>
                   <div className="space-y-1">
-                    <h5 className="font-bold text-[#002776] uppercase tracking-widest text-sm">Aproveite seu café</h5>
-                    <p className="text-xs text-[#009B3A] italic font-semibold">Feito com carinho no Studio Ipê</p>
+                    <h5 className="font-bold text-[#0F2C59] uppercase tracking-widest text-sm">Aproveite seu café</h5>
+                    <p className="text-xs text-[#004BB4] italic font-semibold">Feito com carinho no Studio Ipê</p>
                   </div>
                 </div>
               </div>
@@ -967,7 +967,7 @@ const App = () => {
               <div className="p-6 bg-gray-50 border-t flex gap-4">
                 <button 
                   onClick={() => setShowCoffeeTutorial(false)} 
-                  className="w-full bg-[#009B3A] text-[#FEE101] py-4 rounded-2xl font-black uppercase tracking-widest hover:bg-[#007A2E] transition-all shadow-xl active:scale-95"
+                  className="w-full bg-[#004BB4] text-[#FFB703] py-4 rounded-2xl font-black uppercase tracking-widest hover:bg-[#003884] transition-all shadow-xl active:scale-95"
                 >
                   Entendi, quero café!
                 </button>
@@ -987,23 +987,23 @@ const App = () => {
               initial={{ scale: 0.9, y: 20 }} 
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="bg-white w-full max-w-2xl rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh] pointer-events-auto border-4 border-[#009B3A]"
+              className="bg-white w-full max-w-2xl rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh] pointer-events-auto border-4 border-[#004BB4]"
             >
-              <div className="p-6 border-b flex justify-between items-center bg-[#009B3A]/5">
-                <div className="flex items-center gap-3 text-[#009B3A]">
-                  <div className="p-2 bg-[#009B3A] rounded-xl text-white">
+              <div className="p-6 border-b flex justify-between items-center bg-[#004BB4]/5">
+                <div className="flex items-center gap-3 text-[#004BB4]">
+                  <div className="p-2 bg-[#004BB4] rounded-xl text-white">
                     <Trash2 className="w-6 h-6" />
                   </div>
-                  <h3 className="text-xl font-bold tracking-tight uppercase">Guia de Lixo e Descarte 🇧🇷</h3>
+                  <h3 className="text-xl font-bold tracking-tight uppercase">Guia de Lixo e Descarte ♻️</h3>
                 </div>
-                <button onClick={() => setShowTrashGuide(false)} className="p-2 hover:bg-[#009B3A]/10 rounded-full text-[#009B3A] transition-colors">
+                <button onClick={() => setShowTrashGuide(false)} className="p-2 hover:bg-[#004BB4]/10 rounded-full text-[#004BB4] transition-colors">
                   <X className="w-6 h-6" />
                 </button>
               </div>
               
               <div className="p-6 overflow-y-auto space-y-6 hide-scrollbar">
                 {/* The Main Image requested by the user */}
-                <div className="relative rounded-2xl overflow-hidden border border-[#009B3A]/20 shadow-md">
+                <div className="relative rounded-2xl overflow-hidden border border-[#004BB4]/20 shadow-md">
                   <img 
                     src="input_file_0.png" 
                     alt="Guia Descarte Correto" 
@@ -1012,24 +1012,24 @@ const App = () => {
                 </div>
 
                 {/* Highly structured, copyable and accessible summary matching the image content */}
-                <div className="bg-[#f4faf4] p-5 rounded-2xl border border-[#009B3A]/10 space-y-4 text-left">
-                  <h4 className="font-bold text-[#002776] text-sm uppercase tracking-wider flex items-center gap-2">
-                    ⚽ Informações Importantes do Condomínio
+                <div className="bg-[#f4f7fc] p-5 rounded-2xl border border-[#004BB4]/10 space-y-4 text-left">
+                  <h4 className="font-bold text-[#0F2C59] text-sm uppercase tracking-wider flex items-center gap-2">
+                    📌 Informações Importantes do Condomínio
                   </h4>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-white p-4 rounded-xl border border-[#009B3A]/10 space-y-2">
-                      <h5 className="font-bold text-[#009B3A] text-xs uppercase">♻️ LIXO RECICLÁVEL</h5>
+                    <div className="bg-white p-4 rounded-xl border border-[#004BB4]/10 space-y-2">
+                      <h5 className="font-bold text-[#004BB4] text-xs uppercase">♻️ LIXO RECICLÁVEL</h5>
                       <ul className="text-xs text-gray-600 space-y-1 list-disc pl-4 leading-relaxed font-medium">
                         <li>Papel e papelão</li>
                         <li>Plásticos</li>
                         <li>Metais</li>
-                        <li>Vidros <span className="text-[10px] font-bold text-[#002776]">(bem acondicionados)</span></li>
+                        <li>Vidros <span className="text-[10px] font-bold text-[#0F2C59]">(bem acondicionados)</span></li>
                       </ul>
                     </div>
                     
-                    <div className="bg-white p-4 rounded-xl border border-[#009B3A]/10 space-y-2">
-                      <h5 className="font-bold text-emerald-700 text-xs uppercase">🍏 LIXO ORGÂNICO / NÃO RECICLÁVEL</h5>
+                    <div className="bg-white p-4 rounded-xl border border-[#004BB4]/10 space-y-2">
+                      <h5 className="font-bold text-slate-700 text-xs uppercase">🍏 LIXO ORGÂNICO / NÃO RECICLÁVEL</h5>
                       <ul className="text-xs text-gray-600 space-y-1 list-disc pl-4 leading-relaxed font-medium">
                         <li>Restos de alimentos</li>
                         <li>Papel higiênico e guardanapos usados</li>
@@ -1038,21 +1038,21 @@ const App = () => {
                     </div>
                   </div>
 
-                  <div className="border-t border-[#009B3A]/10 pt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px] text-[#002776] font-bold">
+                  <div className="border-t border-[#004BB4]/10 pt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px] text-[#0F2C59] font-bold">
                     <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-[#009B3A]" />
+                      <div className="w-2 h-2 rounded-full bg-[#004BB4]" />
                       <span>Coloque o lixo em sacos bem fechados.</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-[#009B3A]" />
+                      <div className="w-2 h-2 rounded-full bg-[#004BB4]" />
                       <span>Não deixe sacos de lixo no chão.</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-[#009B3A]" />
+                      <div className="w-2 h-2 rounded-full bg-[#004BB4]" />
                       <span>Feche as tampas após o descarte.</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-[#009B3A]" />
+                      <div className="w-2 h-2 rounded-full bg-[#004BB4]" />
                       <span>Identifique vidros quebrados se houver.</span>
                     </div>
                   </div>
@@ -1062,7 +1062,7 @@ const App = () => {
               <div className="p-6 bg-gray-50 border-t flex gap-4">
                 <button 
                   onClick={() => setShowTrashGuide(false)} 
-                  className="w-full bg-[#009B3A] text-[#FEE101] py-4 rounded-2xl font-black uppercase tracking-widest hover:bg-[#007A2E] transition-all shadow-xl active:scale-95"
+                  className="w-full bg-[#004BB4] text-[#FFB703] py-4 rounded-2xl font-black uppercase tracking-widest hover:bg-[#003884] transition-all shadow-xl active:scale-95"
                 >
                   Entendi, vou colaborar!
                 </button>
@@ -1082,7 +1082,7 @@ const App = () => {
                 animate={{ scale: 1 }} 
                 exit={{ scale: 0 }} 
                 onClick={() => setActiveSection('home')} 
-                className="w-14 h-14 bg-white text-[#009B3A] rounded-2xl shadow-xl flex items-center justify-center border-4 border-[#009B3A] active:scale-90 transition-all hover:bg-emerald-50"
+                className="w-14 h-14 bg-white text-[#004BB4] rounded-2xl shadow-xl flex items-center justify-center border-4 border-[#004BB4] active:scale-90 transition-all hover:bg-blue-50/50"
                 title="Voltar ao Início"
               >
                 <Home className="w-6 h-6 animate-pulse" />
@@ -1105,22 +1105,22 @@ const App = () => {
         </div>
       </div>
 
-      <footer className="py-12 bg-[#009B3A]/5 border-t border-[#009B3A]/10 text-center">
+      <footer className="py-12 bg-[#004BB4]/5 border-t border-[#004BB4]/10 text-center">
         <div className="max-w-4xl mx-auto px-6 flex flex-col items-center gap-4">
           <Logo className="w-8 h-8 opacity-60" />
-          <p className="text-[10px] md:text-xs text-[#002776] font-black uppercase tracking-[0.4em]">{STUDIO_INFO.name} • Bueno • Welcome Home • 🇧🇷 Copa</p>
+          <p className="text-[10px] md:text-xs text-[#0F2C59] font-black uppercase tracking-[0.4em]">{STUDIO_INFO.name} • Bueno • Welcome Home</p>
           
           <div className="space-y-1 text-[9px] md:text-[10px] text-gray-500 font-medium uppercase tracking-wider max-w-lg">
-            <p className="text-[#002776] font-bold">Corretor de Imóveis: <span className="font-extrabold text-[#009B3A]">WELLINGTON RODOVALHO FONSECA</span></p>
+            <p className="text-[#0F2C59] font-bold">Corretor de Imóveis: <span className="font-extrabold text-[#004BB4]">WELLINGTON RODOVALHO FONSECA</span></p>
             <p>CAEPF: 269.462.701/001-49 • CRECI: CRECI-GO 42695 • CNAI: 54826</p>
             <div className="flex flex-wrap justify-center gap-x-3 gap-y-1 mt-2">
-              <a href="https://www.alugagoias.com.br" target="_blank" rel="noopener noreferrer" className="text-[#009B3A] hover:text-[#002776] font-bold transition-colors">www.alugagoias.com.br</a>
-              <a href="https://wa.me/5562991514568" target="_blank" rel="noopener noreferrer" className="text-[#009B3A] hover:text-[#002776] font-bold transition-colors">WhatsApp: 62 99151-4568</a>
-              <a href="mailto:contato@alugagoias.com.br" className="text-[#009B3A] hover:text-[#002776] font-bold transition-colors">contato@alugagoias.com.br</a>
+              <a href="https://www.alugagoias.com.br" target="_blank" rel="noopener noreferrer" className="text-[#004BB4] hover:text-[#0F2C59] font-bold transition-colors">www.alugagoias.com.br</a>
+              <a href="https://wa.me/5562991514568" target="_blank" rel="noopener noreferrer" className="text-[#004BB4] hover:text-[#0F2C59] font-bold transition-colors">WhatsApp: 62 99151-4568</a>
+              <a href="mailto:contato@alugagoias.com.br" className="text-[#004BB4] hover:text-[#0F2C59] font-bold transition-colors">contato@alugagoias.com.br</a>
             </div>
           </div>
 
-          <div className="h-1 w-20 bg-[#FEE101] rounded-full mt-2"></div>
+          <div className="h-1 w-20 bg-[#FFB703] rounded-full mt-2"></div>
         </div>
       </footer>
     </div>
