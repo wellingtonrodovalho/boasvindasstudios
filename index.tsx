@@ -119,12 +119,12 @@ const LOCAL_PLACES = [
 // --- Components ---
 const Logo = ({ className = "w-8 h-8" }: { className?: string }) => (
   <svg viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-    <path d="M256 460V180" stroke="#004BB4" strokeWidth="44" strokeLinecap="round"/>
-    <path d="M256 380L120 280" stroke="#004BB4" strokeWidth="44" strokeLinecap="round"/>
-    <path d="M256 380L392 280" stroke="#004BB4" strokeWidth="44" strokeLinecap="round"/>
-    <circle cx="256" cy="150" r="110" fill="#FFB703"/>
-    <circle cx="90" cy="300" r="95" fill="#0F2C59"/>
-    <circle cx="422" cy="300" r="95" fill="#004BB4"/>
+    <circle cx="256" cy="150" r="110" fill="#F4B41A"/>
+    <circle cx="90" cy="300" r="95" fill="#F4B41A"/>
+    <circle cx="422" cy="300" r="95" fill="#F4B41A"/>
+    <path d="M256 460V180" stroke="#5A3D16" strokeWidth="44" strokeLinecap="round"/>
+    <path d="M256 380L120 280" stroke="#5A3D16" strokeWidth="44" strokeLinecap="round"/>
+    <path d="M256 380L392 280" stroke="#5A3D16" strokeWidth="44" strokeLinecap="round"/>
   </svg>
 );
 
